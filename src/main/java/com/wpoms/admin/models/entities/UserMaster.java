@@ -6,6 +6,7 @@ import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.Table;
+import java.time.LocalDateTime;
 
 @Entity
 @Table(name = "login_users")
@@ -18,20 +19,34 @@ public class UserMaster {
     @Column(name = "email")
     private String email;
 
-    @Column(name = "password")
-    private String password;
+    @Column(name = "password_hash")
+    private String passwordHash;
 
     @Column(name = "role")
     private String role;
 
+    @Column(name = "is_active")
+    private boolean isActive;
+
+    @Column(name = "created_at")
+    private LocalDateTime createdAt;
+
+    @Column(name = "updated_at")
+    private LocalDateTime updatedAt;
+
     public UserMaster() {
     }
 
-    public UserMaster(Long id, String email, String password, String role) {
+    public UserMaster(Long id, String email, String passwordHash, String role, boolean isActive,
+            LocalDateTime createdAt,
+            LocalDateTime updatedAt) {
         this.id = id;
         this.email = email;
-        this.password = password;
+        this.passwordHash = passwordHash;
         this.role = role;
+        this.isActive = isActive;
+        this.createdAt = createdAt;
+        this.updatedAt = updatedAt;
     }
 
     public Long getId() {
@@ -50,12 +65,12 @@ public class UserMaster {
         this.email = email;
     }
 
-    public String getPassword() {
-        return password;
+    public String getPasswordHash() {
+        return passwordHash;
     }
 
-    public void setPassword(String password) {
-        this.password = password;
+    public void setPasswordHash(String passwordHash) {
+        this.passwordHash = passwordHash;
     }
 
     public String getRole() {
@@ -64,5 +79,29 @@ public class UserMaster {
 
     public void setRole(String role) {
         this.role = role;
+    }
+
+    public boolean isActive() {
+        return isActive;
+    }
+
+    public void setActive(boolean active) {
+        isActive = active;
+    }
+
+    public LocalDateTime getCreatedAt() {
+        return createdAt;
+    }
+
+    public void setCreatedAt(LocalDateTime createdAt) {
+        this.createdAt = createdAt;
+    }
+
+    public LocalDateTime getUpdatedAt() {
+        return updatedAt;
+    }
+
+    public void setUpdatedAt(LocalDateTime updatedAt) {
+        this.updatedAt = updatedAt;
     }
 }
