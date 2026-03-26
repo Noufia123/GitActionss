@@ -10,11 +10,13 @@ import java.time.LocalDateTime;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 @Entity
 @Table(name = "login_users")
 @Data
 @AllArgsConstructor
+@NoArgsConstructor
 public class UserMaster {
 
     @Id
@@ -38,8 +40,5 @@ public class UserMaster {
 
     @Column(name = "updated_at")
     private LocalDateTime updatedAt;
-
-    public UserMaster() {
-    }
 
 }
