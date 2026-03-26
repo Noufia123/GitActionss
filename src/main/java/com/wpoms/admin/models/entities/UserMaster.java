@@ -7,11 +7,14 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.Table;
 import java.time.LocalDateTime;
+
+import lombok.AllArgsConstructor;
 import lombok.Data;
 
 @Entity
 @Table(name = "login_users")
 @Data
+@AllArgsConstructor
 public class UserMaster {
 
     @Id
@@ -37,18 +40,6 @@ public class UserMaster {
     private LocalDateTime updatedAt;
 
     public UserMaster() {
-    }
-
-    public UserMaster(Long id, String email, String passwordHash, String role, boolean isActive,
-            LocalDateTime createdAt,
-            LocalDateTime updatedAt) {
-        this.id = id;
-        this.email = email;
-        this.passwordHash = passwordHash;
-        this.role = role;
-        this.isActive = isActive;
-        this.createdAt = createdAt;
-        this.updatedAt = updatedAt;
     }
 
 }
