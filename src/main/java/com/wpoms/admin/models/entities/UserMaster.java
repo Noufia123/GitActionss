@@ -13,7 +13,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 @Entity
-@Table(name = "login_users")
+@Table(name = "login")
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
@@ -21,6 +21,7 @@ public class UserMaster {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "user_id")
     private Long id;
 
     @Column(name = "email")
