@@ -1,12 +1,17 @@
 package com.wpoms.admin.controllers;
 
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.wpoms.admin.models.payloads.RegisterManufacturerPayload;
 import com.wpoms.admin.models.response.RegisterManufacturerResponse;
-import com.wpoms.admin.services.ILoginService;
+import com.wpoms.admin.services.IManufacturerService;
 
+import jakarta.validation.Valid;
+
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 
@@ -15,18 +20,23 @@ import org.springframework.web.bind.annotation.RequestBody;
 @RequestMapping("/api/admin")
 public class AdminController {
 
-    private final ILoginService loginService;
+    private final IManufacturerService loginService;
 
-    public AdminController(ILoginService loginService) {
+    public AdminController(IManufacturerService loginService) {
         this.loginService = loginService;
     }
 
     @PostMapping("/register-manufacturer")
-    public RegisterManufacturerResponse registerManufacturer(@RequestBody RegisterManufacturerPayload payload) {
+    public RegisterManufacturerResponse registerManufacturer( @Valid @RequestBody RegisterManufacturerPayload payload) {
        
         RegisterManufacturerResponse response = loginService.registerManufacturer(payload);
         return response;
     }
+
+@GetMapping("/manufacturer")
+public RegisterManufacturerResponse getManufacturerById(@RequestParam int id){
+    return loginService.getManufacturerById(id);
+}
     
 
 }
