@@ -41,6 +41,7 @@ public class LoginService implements ILoginService{
 
             _userMasterRepository.save(user);
 
+
             response.setUserId(user.getId());
             response.setMessage("Manufacturer registered successfully");
         } catch (Exception ex) {
