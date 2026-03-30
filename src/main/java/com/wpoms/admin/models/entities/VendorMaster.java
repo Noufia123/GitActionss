@@ -20,24 +20,24 @@ public class VendorMaster {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY )
     @Column(name= "vendor_id")
-    private int vendorId;
+    private Integer vendorId;
 
     @Column(name="user_id")
-    private int userId;
+    private Long userId;
 
-    @Column(name="company_name")
-    private String companyName;
+    @Column(name="vendor_name")
+    private String vendorName;
 
-    @Column(name="company_email")
-    private String companyEmail;
+    @Column(name="business_email",unique = true)
+    private String businessEmail;
 
     @Column(name="address")
     private String address;
 
     @Column(name="phone")
-    private long phone;
+    private String  phone;
 
-    @Column(name="gst_number")
+    @Column(name="gst_number",unique = true)
     private String gstNumber;
 
 }
