@@ -16,8 +16,8 @@ public class ManufacturerMaster {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "manufacturer_id")
-    private Integer manufacturerId;
+    @Column(name = "manufacture_id")
+    private int manufacturerId;
 
     @Column(name="company_name")
     private String companyName;
@@ -29,7 +29,7 @@ public class ManufacturerMaster {
     private String address;
 
     @Column(name = "phone")
-    private Long phone;
+    private String phone;
 
     @Column(name = "gst_number")
     private String gstNumber;

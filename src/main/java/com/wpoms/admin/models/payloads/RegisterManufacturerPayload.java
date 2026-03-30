@@ -1,21 +1,51 @@
 package com.wpoms.admin.models.payloads;
 
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.Pattern;
+import jakarta.validation.constraints.Size;
+
 public class RegisterManufacturerPayload {
 
-    private String email;
+
+    @NotBlank(message = "Email is required")
+     @Pattern(
+    regexp = "^[A-Za-z0-9+_.-]+@[A-Za-z0-9.-]+\\.[A-Za-z]{2,6}$",
+    message = "Email must be valid (example: abc@gmail.com)"
+)
+  private String email;
+  @NotBlank(message = "Password is required")
+  @Size(min = 8, message="Pasword must be atleast 8 characters")
     private String password;
+    @NotBlank(message = "Role is required")
     private String role;
+
+    @NotBlank(message ="Company name is required")
     private String companyName;
+
+     @NotBlank(message = "Email is required")
+     @Pattern(
+    regexp = "^[A-Za-z0-9+_.-]+@[A-Za-z0-9.-]+\\.[A-Za-z]{2,6}$",
+    message = "Email must be valid (example: abc@gmail.com)"
+)
     private String companyEmail;
+
+    @NotBlank(message = "Company address is required")
     private String companyAddress;
+
+    @NotBlank(message = "Phone is required")
     private String companyPhone;
-    private String gstNumber;
+
+       @NotBlank(message = "GST number is required")
+          @Size(min = 15, max = 15, message = "GST number must be exactly 15 characters")
+         private String gstNumber;
+    
 
 
     public RegisterManufacturerPayload() {
     }
 
     // Getters and Setters
+
     public String getEmail() {
         return email;
     }
