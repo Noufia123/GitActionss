@@ -13,24 +13,36 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 @Entity
-@Table(name = "customer")
+@Table(name = "customers")
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
 public class CustomerMaster {
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "customer_id")
-    private Long customerId;
+    private Integer customerId;
+
     @Column(name = "user_id")
     private Long userId;
-    @Column(name = "phone")
-    private Long phone;
-    @Column(name = "date_of_birth")
-    private LocalDate dateOfBirth;
+
+    @Column(name = "customer_email")
+    private String customerEmail;
+
+    @Column(name = "customer_name")
+    private String customerName;
+
+    @Column(name = "phone_no")
+    private String phoneNo;
+
+    @Column(name = "dob")
+    private LocalDate dob;
+
     @Column(name = "shipping_address")
     private String shippingAddress;
+
     @Column(name = "contact_preference")
-    private Long contactPreference;
+    private String contactPreference;
 
 }
