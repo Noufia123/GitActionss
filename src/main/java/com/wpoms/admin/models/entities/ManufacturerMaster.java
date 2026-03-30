@@ -12,12 +12,12 @@ import lombok.NoArgsConstructor;
 public class ManufacturerMaster {
 
     @Column(name="user_id")
-    private int userId;
+    private Integer userId;
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "manufacturer_id")
-    private int manufacturerId;
+    private Integer manufacturerId;
 
     @Column(name="company_name")
     private String companyName;

@@ -22,7 +22,7 @@ public class UserMaster {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "user_id")
-    private Long id;
+    private Integer id;
 
     @Column(name = "email")
     private String email;

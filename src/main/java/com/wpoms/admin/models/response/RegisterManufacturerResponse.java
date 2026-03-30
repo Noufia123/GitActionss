@@ -2,21 +2,21 @@ package com.wpoms.admin.models.response;
 
 public class RegisterManufacturerResponse {
 
-    private Long userId;
-    private Long manufacturerId;
+    private Integer userId;
+    private Integer manufacturerId;
     private String message;
 
 
-    public Long getUserId() {
+    public Integer getUserId() {
         return userId;
     }
-    public void setUserId(Long userId) {
+    public void setUserId(Integer userId) {
         this.userId = userId;
     }
-    public Long getManufacturerId() {
+    public Integer getManufacturerId() {
         return manufacturerId;
     }
-    public void setManufacturerId(Long manufacturerId) {
+    public void setManufacturerId(Integer manufacturerId) {
         this.manufacturerId = manufacturerId;
     }
     public String getMessage() {
