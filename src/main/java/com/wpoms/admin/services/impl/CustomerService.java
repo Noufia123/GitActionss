@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 import com.wpoms.admin.models.entities.CustomerMaster;
 import com.wpoms.admin.models.entities.UserMaster;
 import com.wpoms.admin.models.payloads.RegisterCustomerPayload;
+import com.wpoms.admin.models.payloads.UpdateCustomerPayload;
 import com.wpoms.admin.models.response.RegisterCustomerResponse;
 import com.wpoms.admin.repositories.CustomerRepository;
 import com.wpoms.admin.repositories.UserMasterRepository;
@@ -94,6 +95,46 @@ public class CustomerService implements ICustomerService {
             }
 
         return viewResponse;
+
+    }
+
+    //update customer
+
+    @Override
+    public RegisterCustomerResponse updateCustomer(Integer id,UpdateCustomerPayload payload)
+    {
+        RegisterCustomerResponse response=new RegisterCustomerResponse();
+
+        //Fetch customer
+        Optional<CustomerMaster> optionalCustomer=_customerRepository.findById(id) ;
+
+        CustomerMaster  customer =optionalCustomer.orElse(null);
+
+        if(customer==null)
+        {
+            response.setMessage("Customer not found");
+            return response;
+
+        }
+
+        customer.setCustomerName(payload.getCustomerName());
+        customer.setPhoneNo(payload.getPhoneNo());
+        customer.setDob(payload.getDateOfBirth());
+        customer.setShippingAddress(payload.getShippingAddress());
+        customer.setContactPreference(payload.getContactPreference());
+
+        CustomerMaster updateCustomer=_customerRepository.save(customer);
+        response.setCustomerId(updateCustomer.getCustomerId());
+        response.setUserId(updateCustomer.getUserId());
+        response.setCustomerName(updateCustomer.getCustomerName());
+        response.setDateOfBirth(updateCustomer.getDob());
+        response.setCustomerEmail(updateCustomer.getCustomerEmail());
+        response.setPhoneNo(updateCustomer.getPhoneNo());
+        response.setContactPreference(updateCustomer.getContactPreference());
+        response.setShippingAddress(updateCustomer.getShippingAddress());
+
+        response.setMessage("Customer Updated Successfully");
+        return response;
 
     }
 }
