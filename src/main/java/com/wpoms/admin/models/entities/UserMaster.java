@@ -24,7 +24,7 @@ public class UserMaster {
     @Column(name = "user_id")
     private Integer id;
 
-    @Column(name = "email")
+    @Column(name = "email",unique = true)
     private String email;
 
     @Column(name = "password_hash")
@@ -41,5 +41,4 @@ public class UserMaster {
 
     @Column(name = "updated_at")
     private LocalDateTime updatedAt;
-
 }

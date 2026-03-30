@@ -12,7 +12,7 @@ import lombok.NoArgsConstructor;
 public class ManufacturerMaster {
 
     @Column(name="user_id")
-    private Integer userId;
+    private Long userId;
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
