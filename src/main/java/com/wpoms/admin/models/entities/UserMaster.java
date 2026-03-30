@@ -41,5 +41,4 @@ public class UserMaster {
 
     @Column(name = "updated_at")
     private LocalDateTime updatedAt;
-
 }

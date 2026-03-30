@@ -19,8 +19,13 @@ public class VendorController {
         return service.registerVendor(payload);
     }
 
-    @GetMapping("/getVendor")
+    @GetMapping("/get")
     public ResponseEntity<RegisterVendorResponse> getVendor(@RequestParam Integer id){
         return service.getVendor(id);
+    }
+
+    @PutMapping("/edit")
+    public ResponseEntity<RegisterVendorResponse> editVendor(@RequestParam Integer id,@RequestBody RegisterVendorPayload payload){
+        return service.editVendor(id,payload);
     }
 }

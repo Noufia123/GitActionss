@@ -8,4 +8,6 @@ public interface IVendorService {
     ResponseEntity<RegisterVendorResponse> registerVendor(RegisterVendorPayload payload);
 
     ResponseEntity<RegisterVendorResponse> getVendor(Integer id);
+
+    ResponseEntity<RegisterVendorResponse> editVendor(Integer id, RegisterVendorPayload payload);
 }
