@@ -12,7 +12,7 @@ import lombok.NoArgsConstructor;
 
 public class RegisterCustomerResponse {
     private Integer customerId;
-    private Integer userId;
+    private Long userId;
     private String message;
 
     private String customerName;

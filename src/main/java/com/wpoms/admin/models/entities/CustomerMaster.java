@@ -25,7 +25,7 @@ public class CustomerMaster {
     private Integer customerId;
 
     @Column(name = "user_id")
-    private Integer userId;
+    private Long userId;
 
     @Column(name = "customer_email")
     private String customerEmail;

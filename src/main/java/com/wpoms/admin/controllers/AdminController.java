@@ -1,4 +1,4 @@
-//package com.wpoms.admin.controllers;
+package com.wpoms.admin.controllers;
 
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;

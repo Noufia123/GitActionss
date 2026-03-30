@@ -11,10 +11,10 @@ public class RegisterManufacturerResponse {
     private String message;
 
 
-    public Integer getUserId() {
+    public Long getUserId() {
         return userId;
     }
-    public void setUserId(Integer userId) {
+    public void setUserId(Long userId) {
         this.userId = userId;
     }
     public int getManufacturerId() {
