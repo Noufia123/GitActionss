@@ -11,6 +11,9 @@ public interface IManufacturerService {
 
     RegisterManufacturerResponse  getManufacturerById(int id);
     RegisterManufacturerResponse  updateManufacture(int id , RegisterManufacturerPayload payload);
+
+
+    
 }
 
 
