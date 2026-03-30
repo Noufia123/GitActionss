@@ -58,6 +58,10 @@ public class ManufacturerService implements IManufacturerService{
             manufacturerMasterRepository.save(manufacturer);
               response.setUserId(user.getId());
               response.setManufacturerId(manufacturer.getManufacturerId());
+              response.setCompanyName(manufacturer.getCompanyName());
+              response.setCompanyEmail(manufacturer.getCompanyEmail());
+              response.setPhone(manufacturer.getPhone());
+               response.setMessage("Manufacturer registered successfully");
 
             
 
@@ -95,5 +99,38 @@ public class ManufacturerService implements IManufacturerService{
 
 
       return response;
+}
+@Override
+public RegisterManufacturerResponse updateManufacture(int id, RegisterManufacturerPayload payload) {
+
+    RegisterManufacturerResponse response = new RegisterManufacturerResponse();
+
+    try {
+        // Correct way to fetch
+        ManufacturerMaster manufacturerMaster = manufacturerMasterRepository.findById(id)
+                .orElseThrow(() -> new RuntimeException("Manufacturer not found"));
+
+        manufacturerMaster.setCompanyName(payload.getCompanyName());
+        manufacturerMaster.setCompanyEmail(payload.getCompanyEmail());
+        manufacturerMaster.setAddress(payload.getCompanyAddress());
+        manufacturerMaster.setPhone(payload.getCompanyPhone());
+        manufacturerMaster.setGstNumber(payload.getGstNumber());
+
+        manufacturerMasterRepository.save(manufacturerMaster);
+
+       
+        response.setManufacturerId(manufacturerMaster.getManufacturerId());
+        response.setUserId(manufacturerMaster.getUserId());
+        response.setCompanyEmail(manufacturerMaster.getCompanyEmail());
+        response.setCompanyName(manufacturerMaster.getCompanyName());
+        response.setPhone(manufacturerMaster.getPhone());
+        response.setMessage("Manufacturer updated successfully");
+
+    } catch (Exception ex) {
+        System.out.println(ex.getMessage());
+        response.setMessage("Error in updation: " + ex.getMessage());
+    }
+
+    return response; 
 }
 }
