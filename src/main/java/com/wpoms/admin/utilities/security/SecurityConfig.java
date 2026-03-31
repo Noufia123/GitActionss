@@ -1,4 +1,4 @@
-package com.wpoms.admin.Security;
+package com.wpoms.admin.utilities.security;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
