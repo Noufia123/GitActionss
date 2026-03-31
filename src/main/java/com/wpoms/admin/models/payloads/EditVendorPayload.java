@@ -1,23 +1,16 @@
 package com.wpoms.admin.models.payloads;
-import jakarta.validation.constraints.*;
+
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.Pattern;
+import jakarta.validation.constraints.Size;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class  RegisterVendorPayload {
-    @NotBlank(message = "Email is required")
-    @Pattern(
-            regexp = "^[A-Za-z0-9+_.-]+@[A-Za-z0-9.-]+\\.[A-Za-z]{2,6}$",
-            message = "Vendor email must be valid")
-    private String email;
-
-    @NotBlank(message = "Password is required")
-    @Size(min =8,message = "Password must contain 8 characters")
-    private String password;
-
-    private String role;
+public class EditVendorPayload {
 
     @NotBlank(message = "Vendor name is required")
     private String vendorName;
@@ -40,5 +33,6 @@ public class  RegisterVendorPayload {
     @NotBlank(message = "Gst number is required")
     @Size(min = 15,max = 15,message = "GST number should contain 15 digits")
     private String gstNumber;
+
 
 }
