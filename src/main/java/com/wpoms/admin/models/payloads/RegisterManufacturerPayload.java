@@ -32,10 +32,16 @@ public class RegisterManufacturerPayload {
     private String companyAddress;
 
     @NotBlank(message = "Phone is required")
+       @Pattern(
+            regexp = "^\\+?[1-9]\\d{10,14}$",
+            message = "Phone must be a valid international number"
+    )
+    
+    
     private String companyPhone;
 
-       @NotBlank(message = "GST number is required")
-          @Size(min = 15, max = 15, message = "GST number must be exactly 15 characters")
+    //    @NotBlank(message = "GST number is required")
+    //       @Size(min = 15, max = 15, message = "GST number must be exactly 15 characters")
          private String gstNumber;
     
 

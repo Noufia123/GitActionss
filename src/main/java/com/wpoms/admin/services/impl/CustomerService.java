@@ -3,6 +3,9 @@ package com.wpoms.admin.services.impl;
 import java.time.LocalDateTime;
 import java.util.Optional;
 
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import com.wpoms.admin.models.entities.CustomerMaster;
@@ -25,14 +28,25 @@ public class CustomerService implements ICustomerService {
         this._customerRepository = _customerRepository;
     }
 
+
+     // Register customer
+
+    @Autowired
+    BCryptPasswordEncoder bcrypt;
     @Override
     public RegisterCustomerResponse registerCustomer(RegisterCustomerPayload payload) {
         RegisterCustomerResponse response = new RegisterCustomerResponse();
 
         try {
+            if (_customerRepository.existsByCustomerEmail(payload.getEmail())) {
+                response.setMessage("Email already exists for customer");
+                return response;
+            }
+
             UserMaster user = new UserMaster();
             user.setEmail(payload.getEmail());
-            user.setPasswordHash(payload.getPasswordHash());
+
+            user.setPasswordHash(bcrypt.encode(payload.getPasswordHash()));
             user.setRole(payload.getRole());
             user.setCreatedAt(LocalDateTime.now());
             user.setUpdatedAt(LocalDateTime.now());
@@ -70,6 +84,8 @@ public class CustomerService implements ICustomerService {
         }
     }
 
+    //View customer
+
     @Override
 
     public RegisterCustomerResponse getCustomerById(Integer id) {
@@ -88,53 +104,53 @@ public class CustomerService implements ICustomerService {
             viewResponse.setContactPreference(customer.getContactPreference());
 
             viewResponse.setMessage("Customer fetched  successfully");
-        } 
-        else
-            {
-                viewResponse.setMessage("Customer not found");
-            }
+        } else {
+            viewResponse.setMessage("Customer not found");
+        }
 
         return viewResponse;
 
     }
 
-    //update customer
+    // update customer
 
     @Override
-    public RegisterCustomerResponse updateCustomer(Integer id,UpdateCustomerPayload payload)
-    {
-        RegisterCustomerResponse response=new RegisterCustomerResponse();
+    public RegisterCustomerResponse updateCustomer(Integer id, UpdateCustomerPayload payload) {
+        RegisterCustomerResponse response = new RegisterCustomerResponse();
+        try {
 
-        //Fetch customer
-        Optional<CustomerMaster> optionalCustomer=_customerRepository.findById(id) ;
+            // Fetch customer
+            Optional<CustomerMaster> optionalCustomer = _customerRepository.findById(id);
 
-        CustomerMaster  customer =optionalCustomer.orElse(null);
+            CustomerMaster customer = optionalCustomer.orElse(null);
 
-        if(customer==null)
-        {
-            response.setMessage("Customer not found");
+            if (customer == null) {
+                response.setMessage("Customer not found");
+                return response;
+
+            }
+
+            customer.setCustomerName(payload.getCustomerName());
+            customer.setPhoneNo(payload.getPhoneNo());
+            customer.setDob(payload.getDateOfBirth());
+            customer.setShippingAddress(payload.getShippingAddress());
+            customer.setContactPreference(payload.getContactPreference());
+
+            CustomerMaster updateCustomer = _customerRepository.save(customer);
+            response.setCustomerId(updateCustomer.getCustomerId());
+            response.setUserId(updateCustomer.getUserId());
+            response.setCustomerName(updateCustomer.getCustomerName());
+            response.setDateOfBirth(updateCustomer.getDob());
+            response.setCustomerEmail(updateCustomer.getCustomerEmail());
+            response.setPhoneNo(updateCustomer.getPhoneNo());
+            response.setContactPreference(updateCustomer.getContactPreference());
+            response.setShippingAddress(updateCustomer.getShippingAddress());
+
+            response.setMessage("Customer Updated Successfully");
             return response;
-
+        } catch (Exception e) {
+            response.setMessage("Failed to update customer profile" + e.getMessage());
+            return response;
         }
-
-        customer.setCustomerName(payload.getCustomerName());
-        customer.setPhoneNo(payload.getPhoneNo());
-        customer.setDob(payload.getDateOfBirth());
-        customer.setShippingAddress(payload.getShippingAddress());
-        customer.setContactPreference(payload.getContactPreference());
-
-        CustomerMaster updateCustomer=_customerRepository.save(customer);
-        response.setCustomerId(updateCustomer.getCustomerId());
-        response.setUserId(updateCustomer.getUserId());
-        response.setCustomerName(updateCustomer.getCustomerName());
-        response.setDateOfBirth(updateCustomer.getDob());
-        response.setCustomerEmail(updateCustomer.getCustomerEmail());
-        response.setPhoneNo(updateCustomer.getPhoneNo());
-        response.setContactPreference(updateCustomer.getContactPreference());
-        response.setShippingAddress(updateCustomer.getShippingAddress());
-
-        response.setMessage("Customer Updated Successfully");
-        return response;
-
     }
 }
