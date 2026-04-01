@@ -1,58 +1,40 @@
-// package com.wpoms.admin.services.impl;
+package com.wpoms.admin.services.impl;
+import com.wpoms.admin.models.entities.UserMaster;
+import com.wpoms.admin.models.payloads.LoginPayload;
+import com.wpoms.admin.models.payloads.RegisterVendorPayload;
+import com.wpoms.admin.models.response.LoginResponse;
+import com.wpoms.admin.models.response.RegisterVendorResponse;
+import com.wpoms.admin.repositories.UserMasterRepository;
+import com.wpoms.admin.services.ILoginService;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.stereotype.Service;
 
-// import java.time.LocalDateTime;
+import java.util.NoSuchElementException;
+import java.util.Optional;
 
-// import org.apache.catalina.User;
-// import org.springframework.stereotype.Service;
+@Service
+public class LoginService implements ILoginService {
 
-// import com.wpoms.admin.models.entities.CustomerMaster;
-// import com.wpoms.admin.models.entities.UserMaster;
-// import com.wpoms.admin.models.payloads.RegisterCustomerPayload;
-// import com.wpoms.admin.models.payloads.RegisterManufacturerPayload;
-// import com.wpoms.admin.models.response.RegisterCustomerResponse;
-// import com.wpoms.admin.models.response.RegisterManufacturerResponse;
-// import com.wpoms.admin.repositories.UserMasterRepository;
-// import com.wpoms.admin.services.ILoginService;
+    @Autowired
+    BCryptPasswordEncoder bCryptPasswordEncoder;
 
-// @Service
-// public class LoginService implements ILoginService{
+    @Autowired
+    UserMasterRepository userRepository;
 
-
-//     private UserMasterRepository _userMasterRepository;
-
-
-//     public LoginService(UserMasterRepository _userMasterRepository) {
-//         this._userMasterRepository = _userMasterRepository;
-//     }
-
-
-
-
-//     @Override
-//     public RegisterManufacturerResponse registerManufacturer(RegisterManufacturerPayload payload) {
-
-//         RegisterManufacturerResponse response = new RegisterManufacturerResponse();
-//         try {
-
-//             UserMaster user = new UserMaster();
-//             user.setEmail(payload.getEmail());
-//             user.setPasswordHash(payload.getPassword());
-//             user.setRole(payload.getRole());
-//             user.setCreatedAt(LocalDateTime.now());
-//             user.setUpdatedAt(LocalDateTime.now());
-//             user.setActive(true);
-
-//             _userMasterRepository.save(user);
-
-//             response.setUserId(user.getId());
-//             response.setMessage("Manufacturer registered successfully");
-//         } catch (Exception ex) {
-//             System.out.println(ex.getMessage());
-//             response.setMessage("Error registering manufacturer - " + ex.getMessage());
-//         }
-
-//         return response;
-//     }
+    @Override
+    public LoginResponse login(LoginPayload payload) {
 
 
-// }
+            UserMaster user=userRepository.findByEmail(payload.getEmail()).orElseThrow(()->new NoSuchElementException("User not found"));
+
+            if(!bCryptPasswordEncoder.matches(payload.getPassword(),user.getPasswordHash())){
+                throw new IllegalArgumentException("Invalid credentials");
+            }
+            LoginResponse response=new LoginResponse();
+            response.setMessage("Login successful");
+            return response;
+
+    }
+}

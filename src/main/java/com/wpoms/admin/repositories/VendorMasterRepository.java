@@ -24,4 +24,14 @@ public interface VendorMasterRepository extends JpaRepository<VendorMaster,Integ
     boolean existsByGstNumber(@NotBlank(message = "Gst number is required") @Size(min = 15,max = 15,message = "GST number should contain 15 digits") String gstNumber);
 
     boolean existsByGstNumberAndVendorIdNot(@NotBlank(message = "Gst number is required") @Size(min = 15,max = 15,message = "GST number should contain 15 digits") String gstNumber, Integer id);
+
+    boolean existsByPhone(@NotBlank(message = "Phone number is required") @Pattern(
+            regexp = "^\\+?[1-9]\\d{10,14}$",
+            message = "Phone must be a valid international number"
+    ) String phone);
+
+    boolean existsByPhoneAndVendorIdNot(@NotBlank(message = "Phone number is required") @Pattern(
+            regexp = "^\\+?[1-9]\\d{10,14}$",
+            message = "Phone must be a valid international number"
+    ) String phone, Integer id);
 }

@@ -11,7 +11,6 @@ public class RegisterManufacturerResponse {
     private String companyName;
     private String companyEmail;
     private String phone;
-    
     private String message;
 
 

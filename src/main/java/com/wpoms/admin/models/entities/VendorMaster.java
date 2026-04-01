@@ -34,7 +34,7 @@ public class VendorMaster {
     @Column(name="address")
     private String address;
 
-    @Column(name="phone")
+    @Column(name="phone",unique = true)
     private String  phone;
 
     @Column(name="gst_number",unique = true)
