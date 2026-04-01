@@ -22,7 +22,7 @@ public class ManufacturerMaster {
     @Column(name="company_name")
     private String companyName;
 
-    @Column(name="company_email")
+    @Column(name="company_email",unique = true)
     private String companyEmail;
 
     @Column(name = "address")

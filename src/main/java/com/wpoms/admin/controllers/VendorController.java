@@ -10,12 +10,14 @@ import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("/api/vendor")
+@CrossOrigin
 public class VendorController {
     @Autowired
     IVendorService service;
 
     @PostMapping("/register")
     public ResponseEntity<RegisterVendorResponse> addVendor(@Valid @RequestBody RegisterVendorPayload payload){
+
         return service.registerVendor(payload);
     }
 
