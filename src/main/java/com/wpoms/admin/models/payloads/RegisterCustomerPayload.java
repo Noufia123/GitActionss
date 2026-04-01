@@ -42,8 +42,14 @@ public class RegisterCustomerPayload {
     @NotBlank(message = "Customer name is required")
     private String customerName;
 
-    @Pattern(regexp = "^[0-9]{10,14}$", message = "Phone number must be 10 to 14 digits")
+
+   
+     @Pattern(
+            regexp = "^\\+?[1-9]\\d{10,14}$",
+            message = "Phone must be a valid international number"
+    )
     private String phoneNo;
+    
 
     @NotNull(message = "Date of birth is required")
     @Past(message = "Date of birth must be in  the past")

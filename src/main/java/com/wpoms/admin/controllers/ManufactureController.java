@@ -10,6 +10,7 @@ import com.wpoms.admin.services.IManufacturerService;
 
 import jakarta.validation.Valid;
 
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
@@ -18,11 +19,12 @@ import org.springframework.web.bind.annotation.RequestBody;
 
 @RestController
 @RequestMapping("/api/admin")
-public class AdminController {
+@CrossOrigin
+public class ManufactureController {
 
     private final IManufacturerService ManufacturerService;
 
-    public AdminController(IManufacturerService manufacturerService) {
+    public ManufactureController(IManufacturerService manufacturerService) {
         this.ManufacturerService = manufacturerService;
     }
 

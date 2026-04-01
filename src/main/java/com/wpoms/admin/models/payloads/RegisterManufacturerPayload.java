@@ -10,9 +10,9 @@ public class RegisterManufacturerPayload {
     @NotBlank(message = "Email is required")
      @Pattern(
     regexp = "^[A-Za-z0-9+_.-]+@[A-Za-z0-9.-]+\\.[A-Za-z]{2,6}$",
-    message = "Email must be valid (example: abc@gmail.com)"
-)
+    message = "Email must be valid (example: abc@gmail.com)")
   private String email;
+
   @NotBlank(message = "Password is required")
   @Size(min = 8, message="Pasword must be atleast 8 characters")
     private String password;
@@ -25,18 +25,23 @@ public class RegisterManufacturerPayload {
      @NotBlank(message = "Email is required")
      @Pattern(
     regexp = "^[A-Za-z0-9+_.-]+@[A-Za-z0-9.-]+\\.[A-Za-z]{2,6}$",
-    message = "Email must be valid (example: abc@gmail.com)"
-)
+    message = "Email must be valid (example: abc@gmail.com)")
     private String companyEmail;
 
     @NotBlank(message = "Company address is required")
     private String companyAddress;
 
     @NotBlank(message = "Phone is required")
+       @Pattern(
+            regexp = "^\\+?[1-9]\\d{10,14}$",
+            message = "Phone must be a valid international number"
+    )
+    
+    
     private String companyPhone;
 
-       @NotBlank(message = "GST number is required")
-          @Size(min = 15, max = 15, message = "GST number must be exactly 15 characters")
+    //    @NotBlank(message = "GST number is required")
+    //       @Size(min = 15, max = 15, message = "GST number must be exactly 15 characters")
          private String gstNumber;
     
 

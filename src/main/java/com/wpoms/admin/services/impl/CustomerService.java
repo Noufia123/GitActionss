@@ -106,6 +106,7 @@ public class CustomerService implements ICustomerService {
     }
 
     // update customer
+    // update customer
 
     @Override
     public RegisterCustomerResponse updateCustomer(Integer id, UpdateCustomerPayload payload) {
@@ -128,11 +129,11 @@ public class CustomerService implements ICustomerService {
             throw new IllegalArgumentException("Phone number already used by another customer");
         }
 
-        customer.setCustomerName(payload.getCustomerName());
-        customer.setPhoneNo(payload.getPhoneNo());
-        customer.setDob(payload.getDateOfBirth());
-        customer.setShippingAddress(payload.getShippingAddress());
-        customer.setContactPreference(payload.getContactPreference());
+            customer.setCustomerName(payload.getCustomerName());
+            customer.setPhoneNo(payload.getPhoneNo());
+            customer.setDob(payload.getDateOfBirth());
+            customer.setShippingAddress(payload.getShippingAddress());
+            customer.setContactPreference(payload.getContactPreference());
 
         CustomerMaster updateCustomer = _customerRepository.save(customer);
         response.setCustomerId(updateCustomer.getCustomerId());
@@ -144,8 +145,11 @@ public class CustomerService implements ICustomerService {
         response.setContactPreference(updateCustomer.getContactPreference());
         response.setShippingAddress(updateCustomer.getShippingAddress());
 
-        response.setMessage("Customer Updated Successfully");
-        return response;
-
+            response.setMessage("Customer Updated Successfully");
+            return response;
+        } catch (Exception e) {
+            response.setMessage("Failed to update customer profile" + e.getMessage());
+            return response;
+        }
     }
 }

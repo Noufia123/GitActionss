@@ -9,6 +9,7 @@ import com.wpoms.admin.models.entities.CustomerMaster;
 @Repository
 
 public interface CustomerRepository extends JpaRepository<CustomerMaster,Integer > {
+    boolean existsByCustomerEmail(String email);
 
     boolean existsByCustomerEmail(String email);
     boolean existsByPhoneNo(String phoneNo);
