@@ -15,7 +15,7 @@ public class  RegisterVendorPayload {
     private String email;
 
     @NotBlank(message = "Password is required")
-    @Size(min = 8,max = 8,message = "Password must contain 8 characters")
+    @Size(min = 8,message = "Password atleast contain 8 characters")
     private String password;
 
     private String role;

@@ -17,8 +17,12 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 public class RegisterCustomerPayload {
 
+    
     @NotBlank(message = "Email is required")
-    @Email(message = "Invalid email format")
+    @Pattern(
+            regexp = "^[A-Za-z0-9+_.-]+@[A-Za-z0-9.-]+\\.[A-Za-z]{2,6}$",
+            message = "Customer email must be valid"
+    )
     private String email;
 
     @NotBlank(message = "Password is required")
@@ -28,13 +32,17 @@ public class RegisterCustomerPayload {
     @NotBlank(message = "Role is required")
     private String role;
 
-    @Email(message = "Invalid customer email")
+   @NotBlank(message = "Email is required")
+    @Pattern(
+            regexp = "^[A-Za-z0-9+_.-]+@[A-Za-z0-9.-]+\\.[A-Za-z]{2,6}$",
+            message = "Customer email must be valid"
+    )
     private String customerEmail;
 
     @NotBlank(message = "Customer name is required")
     private String customerName;
 
-    @Pattern(regexp = "^[0-9]{10}$", message = "Phone number must be 10 digits")
+    @Pattern(regexp = "^[0-9]{10,14}$", message = "Phone number must be 10 to 14 digits")
     private String phoneNo;
 
     @NotNull(message = "Date of birth is required")
@@ -45,5 +53,6 @@ public class RegisterCustomerPayload {
     private String shippingAddress;
 
     @NotBlank(message = "Contact Preference is required ")
+    @Pattern(regexp = "^[0-9]{10,14}$", message = "Contact number must be 10 to 14 digits")
     private String contactPreference;
 }
