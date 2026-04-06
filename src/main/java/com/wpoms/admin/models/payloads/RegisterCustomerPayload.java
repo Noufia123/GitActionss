@@ -32,12 +32,12 @@ public class RegisterCustomerPayload {
     @NotBlank(message = "Role is required")
     private String role;
 
-   @NotBlank(message = "Email is required")
-    @Pattern(
-            regexp = "^[A-Za-z0-9+_.-]+@[A-Za-z0-9.-]+\\.[A-Za-z]{2,6}$",
-            message = "Customer email must be valid"
-    )
-    private String customerEmail;
+//    @NotBlank(message = "Email is required")
+//     @Pattern(
+//             regexp = "^[A-Za-z0-9+_.-]+@[A-Za-z0-9.-]+\\.[A-Za-z]{2,6}$",
+//             message = "Customer email must be valid"
+//     )
+//     private String customerEmail;
 
     @NotBlank(message = "Customer name is required")
     private String customerName;

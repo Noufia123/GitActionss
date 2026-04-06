@@ -11,9 +11,10 @@ import com.wpoms.admin.models.entities.CustomerMaster;
 public interface CustomerRepository extends JpaRepository<CustomerMaster,Integer > {
     boolean existsByCustomerEmail(String email);
 
-    boolean existsByCustomerEmail(String email);
     boolean existsByPhoneNo(String phoneNo);
     Optional<CustomerMaster> findByPhoneNo(String phoneNo);
+
+    boolean existsByPhoneNoAndCustomerIdNot(String phoneNo, Integer id);
 
     
 } 
