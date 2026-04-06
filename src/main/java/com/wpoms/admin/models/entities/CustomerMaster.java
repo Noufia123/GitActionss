@@ -27,13 +27,13 @@ public class CustomerMaster {
     @Column(name = "user_id")
     private Long userId;
 
-    @Column(name = "customer_email")
+    @Column(name = "customer_email",unique = true)
     private String customerEmail;
 
     @Column(name = "customer_name")
     private String customerName;
 
-    @Column(name = "phone_no")
+    @Column(name = "phone_no",unique = true)
     private String phoneNo;
 
     @Column(name = "dob")
