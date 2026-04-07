@@ -5,6 +5,7 @@ import org.springframework.web.bind.annotation.RestController;
 import com.wpoms.admin.models.payloads.RegisterCustomerPayload;
 import com.wpoms.admin.models.payloads.UpdateCustomerPayload;
 import com.wpoms.admin.models.response.RegisterCustomerResponse;
+import com.wpoms.admin.models.response.UpdateCustomerResponse;
 import com.wpoms.admin.services.ICustomerService;
 
 import jakarta.validation.Valid;
@@ -41,7 +42,7 @@ public class CustomerController {
     }
 
     @PutMapping("/update-customer")
-    public RegisterCustomerResponse updateCustomer(@RequestParam Integer id, @RequestBody UpdateCustomerPayload payload) {
+    public UpdateCustomerResponse updateCustomer(@RequestParam Integer id, @Valid @RequestBody UpdateCustomerPayload payload) {
 
         return customerService.updateCustomer(id, payload);
     }

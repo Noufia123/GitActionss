@@ -14,17 +14,18 @@ public class UpdateCustomerPayload {
     @NotBlank(message = "Customer name is required")
     private String customerName;
 
-    @Pattern(regexp = "^[0-9]{10}$", message = "Phone number must be 10 digits")
+    @Pattern(regexp = "^[0-9]{10,14}$", message = "Phone number must be 10 digits")
     private String phoneNo;
 
     @NotNull(message = "Date of birth is required")
-    @Past(message = "DAte of birth must be in past")
+    @Past(message = "Date of birth must be in past")
     private LocalDate dateOfBirth;
 
     @NotBlank(message = "Shipping address is required")
     private String shippingAddress;
 
     @NotBlank(message = "Contact preference is required")
+    @Pattern(regexp = "^[0-9]{10,14}$", message = "Contact number must be 10 to 14 digits")
     private String contactPreference;
 
 }
