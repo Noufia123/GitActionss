@@ -10,6 +10,13 @@ public class RegisterManufacturerResponse {
     private int manufacturerId;
     private String companyName;
     private String companyEmail;
+    private String  address;
+    public String getAddress() {
+        return address;
+    }
+    public void setAddress(String address) {
+        this.address = address;
+    }
     private String phone;
     private String gstNumber;
     public String getGstNumber() {

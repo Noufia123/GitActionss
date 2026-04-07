@@ -75,6 +75,7 @@ public class ManufacturerService implements IManufacturerService {
         response.setManufacturerId(manufacturer.getManufacturerId());
         response.setCompanyName(manufacturer.getCompanyName());
         response.setCompanyEmail(manufacturer.getCompanyEmail());
+        response.setAddress(manufacturer.getAddress());
         response.setPhone(manufacturer.getPhone());
         response.setGstNumber(manufacturer.getGstNumber());
         response.setMessage("Manufacturer registered successfully");
@@ -95,6 +96,7 @@ public class ManufacturerService implements IManufacturerService {
         response.setCompanyEmail(manufacture.getCompanyEmail());
         response.setCompanyName(manufacture.getCompanyName());
         response.setPhone(manufacture.getPhone());
+        response.setAddress(manufacture.getAddress());
         response.setGstNumber(manufacture.getGstNumber());
         response.setMessage("Manufacturer fetched successfully");
 
