@@ -39,6 +39,9 @@ public class  RegisterVendorPayload {
 
     @NotBlank(message = "Gst number is required")
     @Size(min = 15,max = 15,message = "GST number should contain 15 digits")
+     @Pattern(
+    regexp = "^[0-9]{2}[A-Z]{5}[0-9]{4}[A-Z]{1}[1-9A-Z]{1}Z[0-9A-Z]{1}$",
+    message = "Invalid GST number format" )
     private String gstNumber;
 
 }

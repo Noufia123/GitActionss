@@ -38,7 +38,7 @@ public class ManufacturerService implements IManufacturerService {
             throw new RuntimeException("Company email already exists");
         }
 
-        if (manufacturerMasterRepository.existsByGstNumber(payload.getGstNumber())) {
+        if (manufacturerMasterRepository.existsByGstNumber(payload.getGstNumber().toUpperCase())) {
             throw new RuntimeException("GST number already exists");
         }
 
@@ -77,7 +77,7 @@ public class ManufacturerService implements IManufacturerService {
         response.setCompanyEmail(manufacturer.getCompanyEmail());
         response.setAddress(manufacturer.getAddress());
         response.setPhone(manufacturer.getPhone());
-        response.setGstNumber(manufacturer.getGstNumber());
+        response.setGstNumber(manufacturer.getGstNumber().toUpperCase());
         response.setMessage("Manufacturer registered successfully");
 
         return response;
@@ -88,7 +88,7 @@ public class ManufacturerService implements IManufacturerService {
 
         RegisterManufacturerResponse response = new RegisterManufacturerResponse();
 
-        ManufacturerMaster manufacture = manufacturerMasterRepository.findById(id)
+        ManufacturerMaster manufacture = manufacturerMasterRepository.findByUserId(id)
                 .orElseThrow(() -> new RuntimeException("Manufacturer not found"));
         response.setManufacturerId(manufacture.getManufacturerId());
         
@@ -109,27 +109,27 @@ public class ManufacturerService implements IManufacturerService {
         EditManufacturerResponse response = new EditManufacturerResponse();
 
         if (manufacturerMasterRepository
-                .existsByCompanyEmailAndManufacturerIdNot(payload.getCompanyEmail(), id)) {
+                .existsByCompanyEmailAndUserIdNot(payload.getCompanyEmail(), id)) {
             throw new RuntimeException("Company email already exists for another manufacturer");
         }
 
         if (manufacturerMasterRepository
-                .existsByGstNumberAndManufacturerIdNot(payload.getGstNumber(), id)) {
+                .existsByGstNumberAndUserIdNot(payload.getGstNumber().toUpperCase(), id)) {
             throw new RuntimeException("GST number already exists for another manufacturer");
         }
 
-        if (manufacturerMasterRepository.existsByPhoneAndManufacturerIdNot(
+        if (manufacturerMasterRepository.existsByPhoneAndUserIdNot(
                 payload.getCompanyPhone(), id)) {
             throw new IllegalArgumentException("Phone number already exists for another manufacturer");
         }
-        ManufacturerMaster manufacturerMaster = manufacturerMasterRepository.findById(id)
+        ManufacturerMaster manufacturerMaster = manufacturerMasterRepository.findByUserId(id)
                 .orElseThrow(() -> new RuntimeException("Manufacturer not found"));
 
         manufacturerMaster.setCompanyName(payload.getCompanyName());
         manufacturerMaster.setCompanyEmail(payload.getCompanyEmail());
         manufacturerMaster.setAddress(payload.getCompanyAddress());
         manufacturerMaster.setPhone(payload.getCompanyPhone());
-        manufacturerMaster.setGstNumber(payload.getGstNumber());
+        manufacturerMaster.setGstNumber(payload.getGstNumber().toUpperCase());
 
         manufacturerMasterRepository.save(manufacturerMaster);
 

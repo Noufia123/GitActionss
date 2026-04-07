@@ -59,6 +59,9 @@ public class RegisterCustomerPayload {
     private String shippingAddress;
 
     @NotBlank(message = "Contact Preference is required ")
-    @Pattern(regexp = "^[0-9]{10,14}$", message = "Contact number must be 10 to 14 digits")
+   @Pattern(
+            regexp = "^\\+?[1-9]\\d{10,14}$",
+            message = "Phone must be a valid international number"
+    )
     private String contactPreference;
 }
