@@ -4,7 +4,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.wpoms.admin.models.payloads.EditManufacturerPayload;
 import com.wpoms.admin.models.payloads.RegisterManufacturerPayload;
+import com.wpoms.admin.models.response.EditManufacturerResponse;
 import com.wpoms.admin.models.response.RegisterManufacturerResponse;
 import com.wpoms.admin.services.IManufacturerService;
 
@@ -39,10 +41,10 @@ public class ManufactureController {
         public RegisterManufacturerResponse getManufacturerById(@RequestParam int id){
          return ManufacturerService.getManufacturerById(id);
 }
-     @PutMapping("/update-manufacture")
-        public RegisterManufacturerResponse updateManufacture(
+    @PutMapping("/update-manufacture")
+public EditManufacturerResponse updateManufacture(
         @RequestParam int id,
-        @Valid @RequestBody RegisterManufacturerPayload payload) {
+        @Valid @RequestBody EditManufacturerPayload payload) {
 
     return ManufacturerService.updateManufacture(id, payload);
 }

@@ -11,6 +11,13 @@ public class RegisterManufacturerResponse {
     private String companyName;
     private String companyEmail;
     private String phone;
+    private String gstNumber;
+    public String getGstNumber() {
+        return gstNumber;
+    }
+    public void setGstNumber(String gstNumber) {
+        this.gstNumber = gstNumber;
+    }
     private String message;
 
 

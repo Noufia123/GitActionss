@@ -9,7 +9,9 @@ import org.springframework.stereotype.Service;
 
 import com.wpoms.admin.models.entities.ManufacturerMaster;
 import com.wpoms.admin.models.entities.UserMaster;
+import com.wpoms.admin.models.payloads.EditManufacturerPayload;
 import com.wpoms.admin.models.payloads.RegisterManufacturerPayload;
+import com.wpoms.admin.models.response.EditManufacturerResponse;
 import com.wpoms.admin.models.response.RegisterManufacturerResponse;
 import com.wpoms.admin.repositories.ManufacturerMasterRepository;
 import com.wpoms.admin.repositories.UserMasterRepository;
@@ -74,6 +76,7 @@ public class ManufacturerService implements IManufacturerService {
         response.setCompanyName(manufacturer.getCompanyName());
         response.setCompanyEmail(manufacturer.getCompanyEmail());
         response.setPhone(manufacturer.getPhone());
+        response.setGstNumber(manufacturer.getGstNumber());
         response.setMessage("Manufacturer registered successfully");
 
         return response;
@@ -87,19 +90,21 @@ public class ManufacturerService implements IManufacturerService {
         ManufacturerMaster manufacture = manufacturerMasterRepository.findById(id)
                 .orElseThrow(() -> new RuntimeException("Manufacturer not found"));
         response.setManufacturerId(manufacture.getManufacturerId());
-        response.setUserId(manufacture.getUserId());
+        
+        // response.setUserId(manufacture.getUserId());
         response.setCompanyEmail(manufacture.getCompanyEmail());
         response.setCompanyName(manufacture.getCompanyName());
         response.setPhone(manufacture.getPhone());
+        response.setGstNumber(manufacture.getGstNumber());
         response.setMessage("Manufacturer fetched successfully");
 
         return response;
     }
 
     @Override
-    public RegisterManufacturerResponse updateManufacture(int id, RegisterManufacturerPayload payload) {
+    public EditManufacturerResponse updateManufacture(int id, EditManufacturerPayload payload) {
 
-        RegisterManufacturerResponse response = new RegisterManufacturerResponse();
+        EditManufacturerResponse response = new EditManufacturerResponse();
 
         if (manufacturerMasterRepository
                 .existsByCompanyEmailAndManufacturerIdNot(payload.getCompanyEmail(), id)) {
@@ -126,11 +131,10 @@ public class ManufacturerService implements IManufacturerService {
 
         manufacturerMasterRepository.save(manufacturerMaster);
 
-        response.setManufacturerId(manufacturerMaster.getManufacturerId());
-        response.setUserId(manufacturerMaster.getUserId());
         response.setCompanyEmail(manufacturerMaster.getCompanyEmail());
         response.setCompanyName(manufacturerMaster.getCompanyName());
         response.setPhone(manufacturerMaster.getPhone());
+        response.setGstNumber(manufacturerMaster.getGstNumber());
         response.setMessage("Manufacturer updated successfully");
 
         return response;
