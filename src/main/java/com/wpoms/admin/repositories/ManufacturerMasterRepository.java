@@ -1,5 +1,7 @@
 package com.wpoms.admin.repositories;
 
+import java.util.Optional;
+
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
@@ -13,16 +15,12 @@ import jakarta.validation.constraints.Size;
 public interface ManufacturerMasterRepository extends JpaRepository<ManufacturerMaster, Integer> {
 
     boolean existsByCompanyEmail(String companyEmail);
-
-    boolean existsByCompanyEmailAndManufacturerIdNot(String companyEmail, Integer manufacturerId);
-
     boolean existsByGstNumber(String gstNumber);
-
-    boolean existsByGstNumberAndManufacturerIdNot(String gstNumber, Integer manufacturerId);
     boolean existsByPhone(String phone);
-    boolean existsByPhoneAndManufacturerIdNot(String phone, Integer manufacturerId);
-
-
+    Optional<ManufacturerMaster> findByUserId(int id);
+    boolean existsByCompanyEmailAndUserIdNot(String companyEmail, int id);
+    boolean existsByGstNumberAndUserIdNot(String gstNumber, int id);
+    boolean existsByPhoneAndUserIdNot(String companyPhone, int id);
 }
 
 

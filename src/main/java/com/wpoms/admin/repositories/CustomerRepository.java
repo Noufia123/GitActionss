@@ -14,7 +14,8 @@ public interface CustomerRepository extends JpaRepository<CustomerMaster,Integer
     boolean existsByPhoneNo(String phoneNo);
     Optional<CustomerMaster> findByPhoneNo(String phoneNo);
 
-    boolean existsByPhoneNoAndCustomerIdNot(String phoneNo, Integer id);
+    Optional<CustomerMaster> findByUserId(Integer id);
+    boolean existsByPhoneNoAndUserIdNot(String phoneNo, Integer id);
 
     
 } 

@@ -87,13 +87,13 @@ public class CustomerService implements ICustomerService {
     @Override
     public RegisterCustomerResponse getCustomerById(Integer id) {
 
-        CustomerMaster customer = _customerRepository.findById(id)
+        CustomerMaster customer = _customerRepository.findByUserId(id)
                 .orElseThrow(() -> new CustomerNotFoundException("Customer not found with id : " + id));
 
         RegisterCustomerResponse viewResponse = new RegisterCustomerResponse();
 
-        // viewResponse.setUserId(customer.getUserId());
-        // viewResponse.setCustomerId(customer.getCustomerId());
+        viewResponse.setUserId(customer.getUserId());
+        viewResponse.setCustomerId(customer.getCustomerId());
         viewResponse.setCustomerEmail(customer.getCustomerEmail());
         viewResponse.setCustomerName(customer.getCustomerName());
         viewResponse.setPhoneNo(customer.getPhoneNo());
@@ -111,10 +111,10 @@ public class CustomerService implements ICustomerService {
     @Override
     public UpdateCustomerResponse updateCustomer(Integer id, UpdateCustomerPayload payload) {
 
-        CustomerMaster customer = _customerRepository.findById(id)
+        CustomerMaster customer = _customerRepository.findByUserId(id)
                 .orElseThrow(() -> new CustomerNotFoundException("Customer not found with id : " + id));
 
-        if (_customerRepository.existsByPhoneNoAndCustomerIdNot(payload.getPhoneNo(), id)) {
+        if (_customerRepository.existsByPhoneNoAndUserIdNot(payload.getPhoneNo(), id)) {
             throw new IllegalArgumentException("Phone number already exists for another customer");
         }
 

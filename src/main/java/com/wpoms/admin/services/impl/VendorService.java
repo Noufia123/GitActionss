@@ -36,7 +36,7 @@ public class VendorService implements IVendorService {
             if(vendorRepository.existsByBusinessEmail(payload.getVendorEmail())){
                 throw new IllegalStateException("Email already exists for vendor");
             }
-            if(vendorRepository.existsByGstNumber(payload.getGstNumber())){
+            if(vendorRepository.existsByGstNumber(payload.getGstNumber().toUpperCase())){
                 throw new IllegalStateException("Gst number already exists for vendor");
             }
 
@@ -65,7 +65,7 @@ public class VendorService implements IVendorService {
             vendor.setBusinessEmail(payload.getVendorEmail());
             vendor.setAddress(payload.getAddress());
             vendor.setPhone(payload.getPhone());
-            vendor.setGstNumber(payload.getGstNumber());
+            vendor.setGstNumber(payload.getGstNumber().toUpperCase());
             vendorRepository.save(vendor);
 
             response.setMessage("Vendor registration successful");
@@ -77,7 +77,7 @@ public class VendorService implements IVendorService {
     public RegisterVendorResponse getVendor(Integer id) {
         RegisterVendorResponse response = new RegisterVendorResponse();
 
-            VendorMaster vendor = vendorRepository.findById(id).orElseThrow(()->new NoSuchElementException("Vendor not found"));
+            VendorMaster vendor = vendorRepository.findByUserId(id).orElseThrow(()->new NoSuchElementException("Vendor not found"));
             response.setVendorName(vendor.getVendorName());
             response.setVendorEmail(vendor.getBusinessEmail());
             response.setAddress(vendor.getAddress());
@@ -89,22 +89,22 @@ public class VendorService implements IVendorService {
     @Override
     public EditVendorResponse editVendor(Integer id, EditVendorPayload payload) {
         EditVendorResponse response=new EditVendorResponse();
-            VendorMaster vendor = vendorRepository.findById(id).orElseThrow(()->new NoSuchElementException("Vendor not found"));
+            VendorMaster vendor = vendorRepository.findByUserId(id).orElseThrow(()->new NoSuchElementException("Vendor not found"));
 
-            if (vendorRepository.existsByBusinessEmailAndVendorIdNot(payload.getVendorEmail(), id)) {
+            if (vendorRepository.existsByBusinessEmailAndUserIdNot(payload.getVendorEmail(), id)) {
                 throw new IllegalStateException("Email already exists for another vendor");
             }
-            if(vendorRepository.existsByGstNumberAndVendorIdNot(payload.getGstNumber(),id)){
+            if(vendorRepository.existsByGstNumberAndUserIdNot(payload.getGstNumber().toUpperCase(),id)){
                 throw new IllegalStateException("Gst number already exists for another vendor");
             }
-            if(vendorRepository.existsByPhoneAndVendorIdNot(payload.getPhone(),id)){
+            if(vendorRepository.existsByPhoneAndUserIdNot(payload.getPhone(),id)){
                 throw new IllegalStateException("Phone number already exists for another vendor");
             }
 
             vendor.setVendorName(payload.getVendorName());
             vendor.setAddress(payload.getAddress());
             vendor.setPhone(payload.getPhone());
-            vendor.setGstNumber(payload.getGstNumber());
+            vendor.setGstNumber(payload.getGstNumber().toUpperCase());
             vendor.setBusinessEmail(payload.getVendorEmail());
             vendorRepository.save(vendor);
             response.setMessage("Vendor profile edited successfully");
