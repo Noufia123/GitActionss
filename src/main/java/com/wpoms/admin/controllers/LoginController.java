@@ -25,14 +25,14 @@ public class LoginController {
     private JwtUtil jwtUtil;
 
     @PostMapping("/login")
-    public ResponseEntity<LoginResponse> login(@Valid @RequestBody LoginPayload payload){
-        
-        LoginResponse response = service.login(payload); 
-        if (response.getUserId() != null) {
-            String token = jwtUtil.generateToken(response.getUserId().toString());
+    public ResponseEntity<LoginResponse> login(@Valid @RequestBody LoginPayload payload) {
+
+        LoginResponse response = service.login(payload);
+        if (response.getEmail() != null) {
+            String token = jwtUtil.generateToken(response.getEmail().toString());
             response.setToken(token);
-        }       
+        }
         return ResponseEntity.ok(response);
-        
+
     }
 }

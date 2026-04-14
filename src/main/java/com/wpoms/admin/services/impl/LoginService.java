@@ -35,6 +35,7 @@ public class LoginService implements ILoginService {
             LoginResponse response=new LoginResponse();
             response.setMessage("Login successful");
             response.setUserId(user.getId());
+            response.setEmail(user.getEmail());
             response.setRole(user.getRole());
             return response;
 
