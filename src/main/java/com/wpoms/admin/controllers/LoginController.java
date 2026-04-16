@@ -28,8 +28,8 @@ public class LoginController {
     public ResponseEntity<LoginResponse> login(@Valid @RequestBody LoginPayload payload){
         
         LoginResponse response = service.login(payload); 
-        if (response.getUserId() != null) {
-            String token = jwtUtil.generateToken(response.getUserId().toString());
+        if (response.getEmail() != null) {
+            String token = jwtUtil.generateToken(response.getEmail());
             response.setToken(token);
         }       
         return ResponseEntity.ok(response);
