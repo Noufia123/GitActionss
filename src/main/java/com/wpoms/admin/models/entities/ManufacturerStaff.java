@@ -28,4 +28,6 @@ public class ManufacturerStaff {
 
     @Column(name = "manufacturer_id")
     private int manufacturerId;
+
+    
 }
