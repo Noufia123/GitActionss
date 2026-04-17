@@ -3,12 +3,17 @@ package com.wpoms.admin.utilities.security;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.security.config.annotation.method.configuration.EnableMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
+import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
+import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 
 @Configuration
+@EnableWebSecurity
+@EnableMethodSecurity(prePostEnabled = true)
 public class SecurityConfig {
 
     @Autowired
@@ -22,40 +27,48 @@ public class SecurityConfig {
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         http
-                .csrf(csrf -> csrf.disable())
-                .authorizeHttpRequests(auth -> auth
-
-                        // Swagger endpoints
-                        .requestMatchers(
-                                "/v3/api-docs/**",
-                                "/swagger-ui/**",
-                                "/swagger-ui.html")
-                        .permitAll()
-
-                        // Public APIs
-                        .requestMatchers(
-                                "/api/login",
-                                "/api/vendor/register",
-                                "/api/customer/register-customer",
-                                "/api/admin/register-manufacturer")
-                        .permitAll()
-
-                        .requestMatchers(
-                                "/api/customer/**")
-                        .hasAuthority("CUSTOMER")
-                        .requestMatchers(
-                                "/api/vendor/**")
-                        .hasAuthority("VENDOR")
-                        .requestMatchers(
-                                "/api/admin/**")
-                        .hasAuthority("MANUFACTURER")
-
-                        // Secure all other APIs
-                        .anyRequest().authenticated())
-
-                // Add JWT filter
-                .addFilterBefore(jwtFilter, UsernamePasswordAuthenticationFilter.class);
-
+            .csrf(csrf -> csrf.disable())
+            .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
+            .authorizeHttpRequests(auth -> auth
+                // ========== PUBLIC ENDPOINTS (No authentication required) ==========
+                .requestMatchers(
+                    "/api/login",
+                    "/api/register"
+                ).permitAll()
+                
+                // Swagger UI endpoints
+                .requestMatchers(
+                    "/swagger-ui/**",
+                    "/v3/api-docs/**",
+                    "/swagger-ui.html",
+                    "/swagger-resources/**",
+                    "/webjars/**"
+                ).permitAll()
+                
+                // ========== CUSTOMER ENDPOINTS (Only CUSTOMER role) ==========
+                .requestMatchers(
+                    "/api/customer/register-customer",
+                    "/api/customer/view-customer",
+                    "/api/customer/update-customer"
+                ).hasRole("CUSTOMER")
+                
+                // ========== VENDOR ENDPOINTS (Only VENDOR role) ==========
+                .requestMatchers(
+                    "/api/vendor/register",
+                    "/api/vendor/get",
+                    "/api/vendor/edit"
+                ).hasRole("VENDOR")
+                
+                // ========== MANUFACTURER ENDPOINTS (Only MANUFACTURER role) ==========
+                .requestMatchers(
+                    "/api/admin/register-manufacturer",
+                    "/api/admin/manufacturer",
+                    "/api/admin/update-manufacture"
+                ).hasRole("MANUFACTURER")
+                .anyRequest().denyAll()
+            )
+            .addFilterBefore(jwtFilter, UsernamePasswordAuthenticationFilter.class);
+        
         return http.build();
     }
 }

@@ -1,4 +1,4 @@
-package com.wpoms.admin.controllers;
+ package com.wpoms.admin.controllers;
 import com.wpoms.admin.models.payloads.EditVendorPayload;
 import com.wpoms.admin.models.payloads.RegisterVendorPayload;
 import com.wpoms.admin.models.response.EditVendorResponse;
