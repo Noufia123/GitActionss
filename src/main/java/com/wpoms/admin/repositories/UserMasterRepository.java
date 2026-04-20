@@ -22,4 +22,5 @@ public interface UserMasterRepository extends JpaRepository<UserMaster, Integer>
             regexp = "^[A-Za-z0-9+_.-]+@[A-Za-z0-9.-]+\\.[A-Za-z]{2,6}$",
             message = "Vendor email must be valid"
     ) String email);
+    Optional<UserMaster> findById(Long id);
 }

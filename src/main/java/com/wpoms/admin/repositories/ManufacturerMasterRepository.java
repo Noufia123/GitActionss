@@ -7,10 +7,6 @@ import org.springframework.stereotype.Repository;
 
 import com.wpoms.admin.models.entities.ManufacturerMaster;
 
-import jakarta.validation.constraints.NotBlank;
-import jakarta.validation.constraints.Pattern;
-import jakarta.validation.constraints.Size;
-
 @Repository
 public interface ManufacturerMasterRepository extends JpaRepository<ManufacturerMaster, Integer> {
 
@@ -21,6 +17,8 @@ public interface ManufacturerMasterRepository extends JpaRepository<Manufacturer
     boolean existsByCompanyEmailAndUserIdNot(String companyEmail, int id);
     boolean existsByGstNumberAndUserIdNot(String gstNumber, int id);
     boolean existsByPhoneAndUserIdNot(String companyPhone, int id);
+
+    boolean existsByManufacturerId(int manufacturerId);
 }
 
 
