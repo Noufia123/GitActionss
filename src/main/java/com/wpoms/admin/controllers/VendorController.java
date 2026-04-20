@@ -33,10 +33,5 @@ public class VendorController {
         EditVendorResponse response= service.editVendor(id,payload);
         return ResponseEntity.ok(response);
     }
-
-    @PostMapping("/create-staff")
-    public ResponseEntity<RegisterVendorResponse> addStaff(@Valid @RequestBody VendorStaffPay payload){
-        RegisterVendorResponse response= service.registerVendor(payload);
-        return ResponseEntity.ok(response);
-    }
+        
 }
