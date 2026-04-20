@@ -26,8 +26,11 @@ public class ManufacturerStaff {
     @Column(name = "department")
     private String department;
 
-    @Column(name = "manufacturer_id")
+    @Column(name = "manufacture_id")
     private int manufacturerId;
+
+    @Column(name = "user_id")
+    private Long userId;  
 
     
 }
