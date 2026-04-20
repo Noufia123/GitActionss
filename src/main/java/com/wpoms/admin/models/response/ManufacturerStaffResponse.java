@@ -1,6 +1,6 @@
 package com.wpoms.admin.models.response;
-import com.fasterxml.jackson.annotation.JsonInclude;
 
+import com.fasterxml.jackson.annotation.JsonInclude;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -16,8 +16,7 @@ public class ManufacturerStaffResponse {
     private String phone;
     private String department;
     private int manufacturerId;
+    private Long userId;
     private String email;
-    private String message;
-    
+    private String message;  
 }
-

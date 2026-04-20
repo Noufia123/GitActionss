@@ -63,8 +63,18 @@ public class SecurityConfig {
                 .requestMatchers(
                     "/api/admin/register-manufacturer",
                     "/api/admin/manufacturer",
-                    "/api/admin/update-manufacture"
+                    "/api/admin/update-manufacture",
+                    // NEW MANUFACTURER STAFF ENDPOINTS
+                    "/api/admin/manufacturer/create-staff",
+                    "/api/admin/manufacturer/staff-list"
                 ).hasRole("MANUFACTURER")
+                
+                // ========== MANUFACTURER STAFF ENDPOINTS (Only MANUFACTURER_STAFF role) ==========
+                .requestMatchers(
+                    "/api/manufacturer-staff/view-profile",
+                    "/api/manufacturer-staff/update-profile"
+                ).hasRole("MANUFACTURER_STAFF")
+                
                 .anyRequest().denyAll()
             )
             .addFilterBefore(jwtFilter, UsernamePasswordAuthenticationFilter.class);
