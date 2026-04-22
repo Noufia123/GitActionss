@@ -20,4 +20,7 @@ public interface VendorMasterRepository extends JpaRepository<VendorMaster, Inte
         boolean existsByBusinessEmailAndUserIdNot(String vendorEmail, Integer id);
         boolean existsByGstNumberAndUserIdNot(String gstNumber, Integer id);
         boolean existsByPhoneAndUserIdNot(String phone, Integer id);
+        boolean existsByVendorId(int vendorId);
+
+
 }

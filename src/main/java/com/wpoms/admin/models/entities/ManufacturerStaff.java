@@ -30,7 +30,6 @@ public class ManufacturerStaff {
     private int manufacturerId;
 
     @Column(name = "user_id")
-    private Long userId;  
+    private Long userId;
 
-    
 }
