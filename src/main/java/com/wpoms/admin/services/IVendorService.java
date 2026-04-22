@@ -2,8 +2,11 @@ package com.wpoms.admin.services;
 
 import com.wpoms.admin.models.payloads.EditVendorPayload;
 import com.wpoms.admin.models.payloads.RegisterVendorPayload;
+import com.wpoms.admin.models.payloads.VendorStaffPayload;
 import com.wpoms.admin.models.response.EditVendorResponse;
 import com.wpoms.admin.models.response.RegisterVendorResponse;
+import com.wpoms.admin.models.response.VendorStaffResponse;
+
 import org.springframework.http.ResponseEntity;
 
 public interface IVendorService {
@@ -12,6 +15,8 @@ public interface IVendorService {
     RegisterVendorResponse getVendor(Integer id);
 
     EditVendorResponse editVendor(Integer id, EditVendorPayload payload);
+
+    VendorStaffResponse createVendorStaff(VendorStaffPayload payload);
 
 
 }
