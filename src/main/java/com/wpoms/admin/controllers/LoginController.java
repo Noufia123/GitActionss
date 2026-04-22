@@ -25,10 +25,10 @@ public class LoginController {
 
         LoginResponse response = service.login(payload);
         if (response.getEmail() != null) {
-            String token = jwtUtil.generateToken(response.getEmail().toString());
+            // FIXED: Pass BOTH email AND role
+            String token = jwtUtil.generateToken(response.getEmail(), response.getRole());
             response.setToken(token);
         }
         return ResponseEntity.ok(response);
-
     }
 }

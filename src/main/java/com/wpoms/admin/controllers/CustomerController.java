@@ -10,6 +10,7 @@ import com.wpoms.admin.services.ICustomerService;
 
 import jakarta.validation.Valid;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -22,7 +23,7 @@ import org.springframework.web.bind.annotation.PutMapping;
 @RequestMapping("/api/customer")
 @CrossOrigin
 public class CustomerController {
-
+    @Autowired
     private final ICustomerService customerService;
 
     public CustomerController(ICustomerService customerService) {

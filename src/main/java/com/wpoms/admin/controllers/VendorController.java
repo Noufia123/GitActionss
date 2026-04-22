@@ -33,4 +33,5 @@ public class VendorController {
         EditVendorResponse response= service.editVendor(id,payload);
         return ResponseEntity.ok(response);
     }
+        
 }
