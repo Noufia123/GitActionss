@@ -4,6 +4,7 @@ import java.util.List;
 
 import com.wpoms.admin.models.payloads.EditVendorPayload;
 import com.wpoms.admin.models.payloads.RegisterVendorPayload;
+import com.wpoms.admin.models.payloads.VendorStaffPayload;
 import com.wpoms.admin.models.response.EditVendorResponse;
 import com.wpoms.admin.models.response.RegisterVendorResponse;
 import com.wpoms.admin.models.response.VendorStaffResponse;
@@ -16,4 +17,9 @@ public interface IVendorService {
     
     // ADD THIS METHOD FOR LISTING STAFF
     List<VendorStaffResponse> getAllStaffByVendorId(int vendorId);
+
+
+    VendorStaffResponse createVendorStaff(VendorStaffPayload payload);
+
+
 }

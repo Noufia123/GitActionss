@@ -27,14 +27,48 @@ public class SecurityConfig {
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         http
-            .csrf(csrf -> csrf.disable())
-            .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
-            .authorizeHttpRequests(auth -> auth
-                // ========== PUBLIC ENDPOINTS (No authentication required) ==========
-                .requestMatchers(
-                    "/api/login",
-                    "/api/register"
-                ).permitAll()
+                .csrf(csrf -> csrf.disable())
+                .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
+                .authorizeHttpRequests(auth -> auth
+                        // ========== PUBLIC ENDPOINTS (No authentication required) ==========
+                        .requestMatchers(
+                                "/api/login",
+                                "/api/register")
+                        .permitAll()
+
+                        // Swagger UI endpoints
+                        .requestMatchers(
+                                "/swagger-ui/**",
+                                "/v3/api-docs/**",
+                                "/swagger-ui.html",
+                                "/swagger-resources/**",
+                                "/webjars/**")
+                        .permitAll()
+
+                        // ========== CUSTOMER ENDPOINTS (Only CUSTOMER role) ==========
+                        .requestMatchers(
+                                "/api/customer/register-customer",
+                                "/api/customer/view-customer",
+                                "/api/customer/update-customer")
+                        .hasRole("CUSTOMER")
+
+                        // ========== VENDOR ENDPOINTS (Only VENDOR role) ==========
+                        .requestMatchers(
+                                "/api/vendor/register",
+                                "/api/vendor/get",
+                                "/api/vendor/edit")
+                        .hasRole("VENDOR")
+
+                        // ========== MANUFACTURER ENDPOINTS (Only MANUFACTURER role) ==========
+                        .requestMatchers(
+                                "/api/admin/register-manufacturer",
+                                "/api/admin/manufacturer",
+                                "/api/admin/update-manufacture",
+                                // NEW MANUFACTURER STAFF ENDPOINTS
+                                "/api/admin/manufacturer/create-staff",
+                                "/api/admin/manufacturer/staff-list")
+                        .hasRole("MANUFACTURER")
+
                 
                 // Swagger UI endpoints
                 .requestMatchers(
@@ -57,6 +91,7 @@ public class SecurityConfig {
                     "/api/vendor/register",
                     "/api/vendor/get",
                     "/api/vendor/edit",
+                    "/api/vendor/create-staff",
                     "/api/vendor/staff-list"
                 ).hasRole("VENDOR")
                 
@@ -79,7 +114,7 @@ public class SecurityConfig {
                 .anyRequest().denyAll()
             )
             .addFilterBefore(jwtFilter, UsernamePasswordAuthenticationFilter.class);
-        
+
         return http.build();
     }
 }
