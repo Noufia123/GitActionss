@@ -56,7 +56,8 @@ public class SecurityConfig {
                 .requestMatchers(
                     "/api/vendor/register",
                     "/api/vendor/get",
-                    "/api/vendor/edit"
+                    "/api/vendor/edit",
+                    "/api/vendor/staff-list"
                 ).hasRole("VENDOR")
                 
                 // ========== MANUFACTURER ENDPOINTS (Only MANUFACTURER role) ==========
