@@ -23,12 +23,12 @@ public class JwtFilter extends OncePerRequestFilter {
 
     @Override
     protected void doFilterInternal(HttpServletRequest request,
-                                    HttpServletResponse response,
-                                    FilterChain chain)
+            HttpServletResponse response,
+            FilterChain chain)
             throws ServletException, IOException {
 
         String path = request.getRequestURI();
-        
+
         // Skip filter for login and register
         if (path.equals("/api/login") || path.equals("/api/register")) {
             chain.doFilter(request, response);
@@ -46,6 +46,11 @@ public class JwtFilter extends OncePerRequestFilter {
         String email = jwtUtil.extractEmail(token);
         String role = jwtUtil.extractRole(token);
 
+        if (email == null || role == null || !jwtUtil.validateToken(token, email)) {
+            response.sendError(HttpServletResponse.SC_FORBIDDEN, "Invalid or expired token");
+            return;
+        }
+
         System.out.println("=== JWT DEBUG ===");
         System.out.println("Path: " + path);
         System.out.println("Email: " + email);
@@ -57,10 +62,9 @@ public class JwtFilter extends OncePerRequestFilter {
 
             // Create authentication with role from token
             UsernamePasswordAuthenticationToken authToken = new UsernamePasswordAuthenticationToken(
-                    email, 
-                    null, 
-                    List.of(new SimpleGrantedAuthority("ROLE_" + role))
-            );
+                    email,
+                    null,
+                    List.of(new SimpleGrantedAuthority("ROLE_" + role.toUpperCase())));
 
             SecurityContextHolder.getContext().setAuthentication(authToken);
             System.out.println("Authentication set with ROLE_" + role);
