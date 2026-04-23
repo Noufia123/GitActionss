@@ -27,58 +27,66 @@ public class SecurityConfig {
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         http
-            .csrf(csrf -> csrf.disable())
-            .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
-            .authorizeHttpRequests(auth -> auth
-                // ========== PUBLIC ENDPOINTS (No authentication required) ==========
-                .requestMatchers(
-                    "/api/login",
-                    "/api/register"
-                ).permitAll()
-                
-                // Swagger UI endpoints
-                .requestMatchers(
-                    "/swagger-ui/**",
-                    "/v3/api-docs/**",
-                    "/swagger-ui.html",
-                    "/swagger-resources/**",
-                    "/webjars/**"
-                ).permitAll()
-                
-                // ========== CUSTOMER ENDPOINTS (Only CUSTOMER role) ==========
-                .requestMatchers(
-                    "/api/customer/register-customer",
-                    "/api/customer/view-customer",
-                    "/api/customer/update-customer"
-                ).hasRole("CUSTOMER")
-                
-                // ========== VENDOR ENDPOINTS (Only VENDOR role) ==========
-                .requestMatchers(
-                    "/api/vendor/register",
-                    "/api/vendor/get",
-                    "/api/vendor/edit"
-                ).hasRole("VENDOR")
-                
-                // ========== MANUFACTURER ENDPOINTS (Only MANUFACTURER role) ==========
-                .requestMatchers(
-                    "/api/admin/register-manufacturer",
-                    "/api/admin/manufacturer",
-                    "/api/admin/update-manufacture",
-                    // NEW MANUFACTURER STAFF ENDPOINTS
-                    "/api/admin/manufacturer/create-staff",
-                    "/api/admin/manufacturer/staff-list"
-                ).hasRole("MANUFACTURER")
-                
-                // ========== MANUFACTURER STAFF ENDPOINTS (Only MANUFACTURER_STAFF role) ==========
-                .requestMatchers(
-                    "/api/manufacturer-staff/view-profile",
-                    "/api/manufacturer-staff/update-profile"
-                ).hasRole("MANUFACTURER_STAFF")
-                
-                .anyRequest().denyAll()
-            )
-            .addFilterBefore(jwtFilter, UsernamePasswordAuthenticationFilter.class);
-        
+                .csrf(csrf -> csrf.disable())
+                .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
+                .authorizeHttpRequests(auth -> auth
+                        // ========== PUBLIC ENDPOINTS (No authentication required) ==========
+                        .requestMatchers(
+                                "/api/login",
+                                "/api/register")
+                        .permitAll()
+
+                        // Swagger UI endpoints
+                        .requestMatchers(
+                                "/swagger-ui/**",
+                                "/v3/api-docs/**",
+                                "/swagger-ui.html",
+                                "/swagger-resources/**",
+                                "/webjars/**")
+                        .permitAll()
+
+                        // ========== CUSTOMER ENDPOINTS (Only CUSTOMER role) ==========
+                        .requestMatchers(
+                                "/api/customer/register-customer",
+                                "/api/customer/view-customer",
+                                "/api/customer/update-customer")
+                        .hasRole("CUSTOMER")
+
+                        // ========== VENDOR ENDPOINTS (Only VENDOR role) ==========
+                        .requestMatchers(
+                                "/api/vendor/register",
+                                "/api/vendor/get",
+                                "/api/vendor/edit")
+                        .hasRole("VENDOR")
+
+                        // ========== MANUFACTURER ENDPOINTS (Only MANUFACTURER role) ==========
+                        .requestMatchers(
+                                "/api/admin/register-manufacturer",
+                                "/api/admin/manufacturer",
+                                "/api/admin/update-manufacture",
+                                // NEW MANUFACTURER STAFF ENDPOINTS
+                                "/api/admin/manufacturer/create-staff",
+                                "/api/admin/manufacturer/staff-list")
+                        .hasRole("MANUFACTURER")
+
+                        // ========== MANUFACTURER STAFF ENDPOINTS (Only MANUFACTURER_STAFF role)
+                        // ==========
+                        .requestMatchers(
+                                "/api/manufacturer-staff/view-profile",
+                                "/api/manufacturer-staff/update-profile")
+                        .hasRole("MANUFACTURER_STAFF")
+
+                        // ========== MANUFACTURER PRODUCT ENDPOINTS ==========
+                        .requestMatchers(
+                                "/api/manufacturer/create-product",
+                                "/api/manufacturer/products",
+                                "/api/manufacturer/product",
+                                "/api/manufacturer/update-product")
+                        .hasRole("MANUFACTURER")
+
+                        .anyRequest().denyAll())
+                .addFilterBefore(jwtFilter, UsernamePasswordAuthenticationFilter.class);
+
         return http.build();
     }
 }
