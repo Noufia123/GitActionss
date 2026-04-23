@@ -84,6 +84,11 @@ public class SecurityConfig {
                                 "/api/manufacturer/update-product")
                         .hasRole("MANUFACTURER")
 
+                
+                        // Vendor creates staff
+                        .requestMatchers(
+                                "/api/vendor/create-staff")
+                        .hasRole("VENDOR")
                         .anyRequest().denyAll())
                 .addFilterBefore(jwtFilter, UsernamePasswordAuthenticationFilter.class);
 

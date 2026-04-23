@@ -1,5 +1,6 @@
 package com.wpoms.admin.models.payloads;
 
+import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Pattern;
@@ -21,7 +22,14 @@ public class VendorStaffPayload {
     @NotBlank(message = "Department is required")
     private String department;
 
+    @NotBlank(message = "Email is required")
+    @Email(message = "Invalid email format")
+    private String email;
+
+    @NotBlank(message = "Password is required")
+    @Pattern(regexp = "^(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z])(?=.*[@#$%^&+=])(?=\\S+$).{8,}$", message = "Password must be at least 8 characters with one digit, one uppercase, one lowercase, one special character")
+    private String password;
+
     @NotNull(message = "Vendor ID is required")
     private int vendorId;
 }
-
