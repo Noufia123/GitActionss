@@ -35,7 +35,7 @@ public class VendorService implements IVendorService {
     private VendorMasterRepository vendorRepository;
 
     @Autowired
-    VendorStaffRepository vendorStaffRepository;  // ADD THIS
+    VendorStaffRepository vendorStaffRepository;
 
     @Autowired
     private BCryptPasswordEncoder bCryptPasswordEncoder;
@@ -84,8 +84,8 @@ public class VendorService implements IVendorService {
         vendor.setGstNumber(payload.getGstNumber().toUpperCase());
 
         response.setMessage("Vendor registration successful");
-            response.setVendorId(vendor.getVendorId());
-            response.setUserId(user.getId());
+        response.setVendorId(vendor.getVendorId());
+        response.setUserId(user.getId());
 
         vendorRepository.save(vendor);
 
@@ -100,15 +100,16 @@ public class VendorService implements IVendorService {
 
         RegisterVendorResponse response = new RegisterVendorResponse();
 
-            VendorMaster vendor = vendorRepository.findByUserId(id).orElseThrow(()->new NoSuchElementException("Vendor not found"));
-            response.setVendorName(vendor.getVendorName());
-            response.setVendorEmail(vendor.getBusinessEmail());
-            response.setAddress(vendor.getAddress());
-            response.setPhone(vendor.getPhone());
-            response.setGstNumber(vendor.getGstNumber());
-            response.setVendorId(vendor.getVendorId());
-            response.setUserId(vendor.getUserId());
-            return response;
+        VendorMaster vendor = vendorRepository.findByUserId(id)
+                .orElseThrow(() -> new NoSuchElementException("Vendor not found"));
+        response.setVendorName(vendor.getVendorName());
+        response.setVendorEmail(vendor.getBusinessEmail());
+        response.setAddress(vendor.getAddress());
+        response.setPhone(vendor.getPhone());
+        response.setGstNumber(vendor.getGstNumber());
+        response.setVendorId(vendor.getVendorId());
+        response.setUserId(vendor.getUserId());
+        return response;
     }
 
     // ========================= CREATE VENDOR STAFF =========================
@@ -199,11 +200,10 @@ public class VendorService implements IVendorService {
         return response;
     }
 
-
-    // ADD THIS METHOD - GET ALL STAFF BY VENDOR ID
+    // GET ALL STAFF BY VENDOR ID
     @Override
     public List<VendorStaffResponse> getAllStaffByVendorId(int vendorId) {
-        
+
         System.out.println("=== GET VENDOR STAFF DEBUG ===");
         System.out.println("Vendor ID: " + vendorId);
 
@@ -243,5 +243,5 @@ public class VendorService implements IVendorService {
 
         return staffResponses;
     }
-        
+
 }
