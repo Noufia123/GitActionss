@@ -25,7 +25,7 @@ public class LoginController {
 
         LoginResponse response = service.login(payload);
         if (response.getEmail() != null) {
-            // FIXED: Pass BOTH email AND role
+            // Token generation with both email AND role
             String token = jwtUtil.generateToken(response.getEmail(), response.getRole());
             response.setToken(token);
         }

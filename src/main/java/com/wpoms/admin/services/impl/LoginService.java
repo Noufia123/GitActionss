@@ -5,7 +5,7 @@ import com.wpoms.admin.models.payloads.LoginPayload;
 import com.wpoms.admin.models.response.LoginResponse;
 import com.wpoms.admin.repositories.UserMasterRepository;
 import com.wpoms.admin.services.ILoginService;
-import com.wpoms.admin.utilities.security.JwtUtil;  // ← ADD THIS IMPORT
+import com.wpoms.admin.utilities.security.JwtUtil;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
@@ -23,7 +23,7 @@ public class LoginService implements ILoginService {
     UserMasterRepository userRepository;
 
     @Autowired
-    JwtUtil jwtUtil;  // ← ADD THIS
+    JwtUtil jwtUtil;
 
     @Override
     public LoginResponse login(LoginPayload payload) {
@@ -43,7 +43,7 @@ public class LoginService implements ILoginService {
         response.setUserId(user.getId());
         response.setEmail(user.getEmail());
         response.setRole(user.getRole());
-        response.setToken(token);  // ← ADD TOKEN TO RESPONSE
+        response.setToken(token);
 
         return response;
     }

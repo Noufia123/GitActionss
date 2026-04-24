@@ -1,7 +1,6 @@
 package com.wpoms.admin.services.impl;
 
 import java.time.LocalDateTime;
-import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
@@ -100,8 +99,6 @@ public class CustomerService implements ICustomerService {
         viewResponse.setDateOfBirth(customer.getDob());
         viewResponse.setShippingAddress(customer.getShippingAddress());
         viewResponse.setContactPreference(customer.getContactPreference());
-
-        // viewResponse.setMessage("Customer fetched successfully");
 
         return viewResponse;
     }

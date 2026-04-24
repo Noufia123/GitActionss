@@ -12,15 +12,11 @@ import java.util.Optional;
 @Repository
 public interface UserMasterRepository extends JpaRepository<UserMaster, Integer> {
 
+        boolean existsByEmail(
+                        @NotBlank(message = "Email is required") @Pattern(regexp = "^[A-Za-z0-9+_.-]+@[A-Za-z0-9.-]+\\.[A-Za-z]{2,6}$", message = "Vendor email must be valid") String email);
 
-    boolean existsByEmail(@NotBlank(message = "Email is required") @Pattern(
-            regexp = "^[A-Za-z0-9+_.-]+@[A-Za-z0-9.-]+\\.[A-Za-z]{2,6}$",
-            message = "Vendor email must be valid"
-    ) String email);
+        Optional<UserMaster> findByEmail(
+                        @NotBlank(message = "Email is required") @Pattern(regexp = "^[A-Za-z0-9+_.-]+@[A-Za-z0-9.-]+\\.[A-Za-z]{2,6}$", message = "Vendor email must be valid") String email);
 
-    Optional<UserMaster> findByEmail(@NotBlank(message = "Email is required") @Pattern(
-            regexp = "^[A-Za-z0-9+_.-]+@[A-Za-z0-9.-]+\\.[A-Za-z]{2,6}$",
-            message = "Vendor email must be valid"
-    ) String email);
-    Optional<UserMaster> findById(Long id);
+        Optional<UserMaster> findById(Long id);
 }

@@ -11,7 +11,7 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @JsonInclude(JsonInclude.Include.NON_NULL)
 public class EditManufacturerResponse {
-      
+
     private String companyName;
     private String companyEmail;
     private String companyAddress;

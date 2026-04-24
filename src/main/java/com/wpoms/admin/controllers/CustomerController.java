@@ -43,7 +43,8 @@ public class CustomerController {
     }
 
     @PutMapping("/update-customer")
-    public UpdateCustomerResponse updateCustomer(@RequestParam Integer id, @Valid @RequestBody UpdateCustomerPayload payload) {
+    public UpdateCustomerResponse updateCustomer(@RequestParam Integer id,
+            @Valid @RequestBody UpdateCustomerPayload payload) {
 
         return customerService.updateCustomer(id, payload);
     }
