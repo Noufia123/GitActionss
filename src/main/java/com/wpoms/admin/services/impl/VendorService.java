@@ -20,7 +20,10 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.NoSuchElementException;
+import java.util.stream.Collectors;
 
 @Service
 public class VendorService implements IVendorService {
@@ -32,7 +35,7 @@ public class VendorService implements IVendorService {
     private VendorMasterRepository vendorRepository;
 
     @Autowired
-    private VendorStaffRepository vendorStaffRepository;
+    VendorStaffRepository vendorStaffRepository;
 
     @Autowired
     private BCryptPasswordEncoder bCryptPasswordEncoder;
@@ -80,6 +83,10 @@ public class VendorService implements IVendorService {
         vendor.setPhone(payload.getPhone());
         vendor.setGstNumber(payload.getGstNumber().toUpperCase());
 
+        response.setMessage("Vendor registration successful");
+        response.setVendorId(vendor.getVendorId());
+        response.setUserId(user.getId());
+
         vendorRepository.save(vendor);
 
         response.setMessage("Vendor registration successful");
@@ -95,13 +102,13 @@ public class VendorService implements IVendorService {
 
         VendorMaster vendor = vendorRepository.findByUserId(id)
                 .orElseThrow(() -> new NoSuchElementException("Vendor not found"));
-
         response.setVendorName(vendor.getVendorName());
         response.setVendorEmail(vendor.getBusinessEmail());
         response.setAddress(vendor.getAddress());
         response.setPhone(vendor.getPhone());
         response.setGstNumber(vendor.getGstNumber());
-
+        response.setVendorId(vendor.getVendorId());
+        response.setUserId(vendor.getUserId());
         return response;
     }
 
@@ -165,7 +172,6 @@ public class VendorService implements IVendorService {
     public EditVendorResponse editVendor(Integer id, EditVendorPayload payload) {
 
         EditVendorResponse response = new EditVendorResponse();
-
         VendorMaster vendor = vendorRepository.findByUserId(id)
                 .orElseThrow(() -> new NoSuchElementException("Vendor not found"));
 
@@ -193,4 +199,49 @@ public class VendorService implements IVendorService {
 
         return response;
     }
+
+    // GET ALL STAFF BY VENDOR ID
+    @Override
+    public List<VendorStaffResponse> getAllStaffByVendorId(int vendorId) {
+
+        System.out.println("=== GET VENDOR STAFF DEBUG ===");
+        System.out.println("Vendor ID: " + vendorId);
+
+        // Verify vendor exists using vendorId
+        if (!vendorRepository.existsByVendorId(vendorId)) {
+            throw new RuntimeException("Vendor not found with ID: " + vendorId);
+        }
+
+        // Get all staff for this vendor
+        List<VendorStaff> staffList = vendorStaffRepository.findByVendorId(vendorId);
+
+        if (staffList.isEmpty()) {
+            return new ArrayList<>();
+        }
+
+        // Convert each staff entity to response object
+        List<VendorStaffResponse> staffResponses = staffList.stream().map(staff -> {
+            VendorStaffResponse staffResponse = new VendorStaffResponse();
+
+            // Get email from UserMaster using userId
+            UserMaster user = userRepository.findById(staff.getUserId())
+                    .orElseThrow(() -> new RuntimeException("User not found for staff ID: " + staff.getSId()));
+
+            staffResponse.setSId(staff.getSId());
+            staffResponse.setName(staff.getName());
+            staffResponse.setPhone(staff.getPhone());
+            staffResponse.setDepartment(staff.getDepartment());
+            staffResponse.setVendorId(staff.getVendorId());
+            staffResponse.setUserId(staff.getUserId());
+            staffResponse.setEmail(user.getEmail());
+
+            return staffResponse;
+        }).collect(Collectors.toList());
+
+        System.out.println("Found " + staffResponses.size() + " staff records");
+        System.out.println("=== END DEBUG ===");
+
+        return staffResponses;
+    }
+
 }

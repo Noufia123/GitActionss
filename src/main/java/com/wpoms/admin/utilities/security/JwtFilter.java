@@ -29,8 +29,8 @@ public class JwtFilter extends OncePerRequestFilter {
 
         String path = request.getRequestURI();
 
-        // Skip filter for login and register
-        if (path.equals("/api/login") || path.equals("/api/register")) {
+        // ========== SKIP FILTER FOR PUBLIC PATHS (Same as SecurityConfig) ==========
+        if (shouldSkipFilter(path)) {
             chain.doFilter(request, response);
             return;
         }
@@ -75,5 +75,16 @@ public class JwtFilter extends OncePerRequestFilter {
         }
 
         chain.doFilter(request, response);
+    }
+
+    // ADD THIS METHOD - Must match the paths in SecurityConfig
+    private boolean shouldSkipFilter(String path) {
+        return path.equals("/api/login") ||
+               path.equals("/api/register") ||
+               path.startsWith("/swagger-ui") ||
+               path.startsWith("/v3/api-docs") ||
+               path.equals("/swagger-ui.html") ||
+               path.startsWith("/swagger-resources") ||
+               path.startsWith("/webjars");
     }
 }
