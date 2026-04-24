@@ -24,8 +24,7 @@ public class ManufacturerStaffPayload {
     private String email;
 
     @NotBlank(message = "Password is required")
-    @Pattern(regexp = "^(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z])(?=.*[@#$%^&+=])(?=\\S+$).{8,}$", 
-             message = "Password must be at least 8 characters with one digit, one uppercase, one lowercase, one special character")
+    @Pattern(regexp = "^(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z])(?=.*[@#$%^&+=])(?=\\S+$).{8,}$", message = "Password must be at least 8 characters with one digit, one uppercase, one lowercase, one special character")
     private String password;
 
     @NotNull(message = "Manufacturer ID is required")

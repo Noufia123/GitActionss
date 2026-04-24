@@ -15,7 +15,7 @@ public class VendorStaffResponse {
     private String phone;
     private String department;
     private int vendorId;
-    private Long userId;      // ADD THIS
-    private String email;     // ADD THIS
-    private String message;   // ADD THIS
+    private Long userId;
+    private String email;
+    private String message;
 }

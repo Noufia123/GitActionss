@@ -22,6 +22,5 @@ public class UpdateCustomerResponse {
     private String shippingAddress;
     private String contactPreference;
     private String message;
-    
 
 }

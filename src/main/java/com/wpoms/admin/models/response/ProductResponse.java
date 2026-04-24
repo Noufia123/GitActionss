@@ -8,11 +8,14 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 public class ProductResponse {
-    private Long productId;
+
+    private int productId;
     private String productName;
     private String category;
     private Double price;
     private String warrantyType;
     private String description;
-    private Long manufacturerId;
+    private int manufacturerId;
+    private String message;
+
 }

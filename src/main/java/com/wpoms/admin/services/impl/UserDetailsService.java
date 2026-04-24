@@ -19,7 +19,6 @@ public class UserDetailsService
     @Autowired
     private UserMasterRepository userRepository;
 
-    // Your custom method
     @Override
     public UserDetails loadUserByEmail(String email) {
 
@@ -31,7 +30,6 @@ public class UserDetailsService
 
         UserMaster user = userOptional.get();
 
-
         return org.springframework.security.core.userdetails.User
                 .builder()
                 .username(user.getEmail())
@@ -40,7 +38,7 @@ public class UserDetailsService
                 .build();
     }
 
-    //Spring Security REQUIRED method
+    // Spring Security
     @Override
     public UserDetails loadUserByUsername(String email) throws UsernameNotFoundException {
         return loadUserByEmail(email);

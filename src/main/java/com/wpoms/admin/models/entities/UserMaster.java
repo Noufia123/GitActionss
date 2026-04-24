@@ -24,7 +24,7 @@ public class UserMaster {
     @Column(name = "user_id")
     private Long id;
 
-    @Column(name = "email",unique = true)
+    @Column(name = "email", unique = true)
     private String email;
 
     @Column(name = "password_hash")

@@ -18,5 +18,5 @@ public class ManufacturerStaffResponse {
     private int manufacturerId;
     private Long userId;
     private String email;
-    private String message;  
+    private String message;
 }
