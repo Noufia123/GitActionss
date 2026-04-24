@@ -100,8 +100,6 @@ public class CustomerService implements ICustomerService {
         viewResponse.setShippingAddress(customer.getShippingAddress());
         viewResponse.setContactPreference(customer.getContactPreference());
 
-        // viewResponse.setMessage("Customer fetched successfully");
-
         return viewResponse;
     }
 
