@@ -33,8 +33,6 @@ public class ManufactureController {
         this.ManufacturerService = manufacturerService;
     }
 
-   
-    
     @PostMapping("/register-manufacturer")
     public RegisterManufacturerResponse registerManufacturer(@Valid @RequestBody RegisterManufacturerPayload payload) {
         RegisterManufacturerResponse response = ManufacturerService.registerManufacturer(payload);
@@ -45,7 +43,7 @@ public class ManufactureController {
     public RegisterManufacturerResponse getManufacturerById(@RequestParam int id) {
         return ManufacturerService.getManufacturerById(id);
     }
-    
+
     @PutMapping("/update-manufacture")
     public EditManufacturerResponse updateManufacture(
             @RequestParam int id,
@@ -53,20 +51,18 @@ public class ManufactureController {
         return ManufacturerService.updateManufacture(id, payload);
     }
 
-    
     @PostMapping("/manufacturer/create-staff")
     public ManufacturerStaffResponse createManufacturerStaff(
             @Valid @RequestBody ManufacturerStaffPayload payload) {
-        
+
         ManufacturerStaffResponse response = ManufacturerService.createManufacturerStaff(payload);
         return response;
     }
 
-    
     @GetMapping("/manufacturer/staff-list")
     public List<ManufacturerStaffResponse> getAllStaffByManufacturerId(
             @RequestParam int manufacturerId) {
-        
+
         List<ManufacturerStaffResponse> response = ManufacturerService.getAllStaffByManufacturerId(manufacturerId);
         return response;
     }

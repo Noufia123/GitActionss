@@ -13,11 +13,11 @@ public class JwtUtil {
     private final SecretKey key = Keys.hmacShaKeyFor(
             "my-super-secret-key-that-is-at-least-32-bytes!".getBytes());
 
-    // FIXED: Generate token with email AND role
+    // Generate token with email AND role
     public String generateToken(String email, String role) {
         return Jwts.builder()
                 .subject(email)
-                .claim("role", role.toUpperCase())  // ← ADD ROLE HERE
+                .claim("role", role.toUpperCase())
                 .issuedAt(new Date())
                 .expiration(new Date(System.currentTimeMillis() + 1000L * 60 * 60 * 24 * 6))
                 .signWith(key)
@@ -28,7 +28,7 @@ public class JwtUtil {
         return getClaims(token).getSubject();
     }
 
-    // FIXED: Add method to extract role from token
+    // Method to extract role from token
     public String extractRole(String token) {
         try {
             return getClaims(token).get("role", String.class);

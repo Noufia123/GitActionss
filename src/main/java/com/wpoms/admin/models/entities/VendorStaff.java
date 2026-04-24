@@ -21,14 +21,14 @@ public class VendorStaff {
     private String name;
 
     @Column(name = "phone")
-    private String phone;  // Change from int to String
+    private String phone;
 
     @Column(name = "department")
     private String department;
 
     @Column(name = "vendor_id")
     private int vendorId;
-    
-    @Column(name = "user_id")  // ADD THIS FIELD
+
+    @Column(name = "user_id")
     private Long userId;
 }

@@ -40,7 +40,7 @@ public class ManufacturerService implements IManufacturerService {
 
     @Override
     public RegisterManufacturerResponse registerManufacturer(RegisterManufacturerPayload payload) {
-        // Your existing code - unchanged
+
         RegisterManufacturerResponse response = new RegisterManufacturerResponse();
 
         if (manufacturerMasterRepository.existsByCompanyEmail(payload.getCompanyEmail())) {

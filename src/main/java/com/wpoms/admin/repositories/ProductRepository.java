@@ -10,13 +10,13 @@ import com.wpoms.admin.models.entities.Product;
 
 @Repository
 public interface ProductRepository extends JpaRepository<Product, Integer> {
-    
+
     // Find products by manufacturer ID
     List<Product> findByManufacturerId(int manufacturerId);
-    
+
     // Check if product exists for a manufacturer
     boolean existsByProductNameAndManufacturerId(String productName, int manufacturerId);
-    
+
     // Find product by ID and manufacturer ID
     Optional<Product> findByProductIdAndManufacturerId(int productId, int manufacturerId);
 }

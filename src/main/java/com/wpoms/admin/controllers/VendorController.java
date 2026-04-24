@@ -46,7 +46,7 @@ public class VendorController {
         List<VendorStaffResponse> response = service.getAllStaffByVendorId(vendorId);
         return ResponseEntity.ok(response);
     }
-        
+
     @PostMapping("/create-staff")
     public VendorStaffResponse createVendorStaff(
             @Valid @RequestBody VendorStaffPayload payload) {

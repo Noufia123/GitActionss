@@ -10,8 +10,9 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @JsonInclude(JsonInclude.Include.NON_NULL)
 public class RegisterVendorResponse {
+
     private Long userId;
-    private Integer vendorId;    // ← Changed from vendor_id to vendorId
+    private Integer vendorId;
     private String message;
     private String vendorName;
     private String vendorEmail;

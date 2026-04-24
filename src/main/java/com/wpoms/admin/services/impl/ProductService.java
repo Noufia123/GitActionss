@@ -26,14 +26,14 @@ public class ProductService implements IProductService {
     @Override
     public ProductResponse createProduct(ProductPayload payload) {
 
-        // Check if manufacturer exists (FIXED: use !exists)
+        // Check if manufacturer exists
         if (!manufacturerMasterRepository.existsByManufacturerId(payload.getManufacturerId().intValue())) {
             throw new RuntimeException("Manufacturer not found with ID: " + payload.getManufacturerId());
         }
 
         // Check if product already exists for this manufacturer
         if (productRepository.existsByProductNameAndManufacturerId(
-                payload.getProductName(), 
+                payload.getProductName(),
                 payload.getManufacturerId().intValue())) {
             throw new RuntimeException("Product " + payload.getProductName() + " already exists for this manufacturer");
         }
@@ -47,7 +47,7 @@ public class ProductService implements IProductService {
         product.setDescription(payload.getDescription());
         product.setManufacturerId(payload.getManufacturerId().intValue());
 
-        // SAVE the product (YOU WERE MISSING THIS)
+        // SAVE the product
         Product savedProduct = productRepository.save(product);
 
         // Prepare response
@@ -120,8 +120,9 @@ public class ProductService implements IProductService {
     @Override
     public ProductResponse updateProduct(int productId, ProductPayload payload) {
 
-        // Find product by ID and manufacturer ID (FIXED: use correct method)
-        Product product = productRepository.findByProductIdAndManufacturerId(productId, payload.getManufacturerId().intValue())
+        // Find product by ID and manufacturer ID
+        Product product = productRepository
+                .findByProductIdAndManufacturerId(productId, payload.getManufacturerId().intValue())
                 .orElseThrow(() -> new RuntimeException("Product not found with ID: " + productId));
 
         // Update fields
@@ -130,7 +131,6 @@ public class ProductService implements IProductService {
         product.setPrice(payload.getPrice());
         product.setWarrantyType(payload.getWarrantyType());
         product.setDescription(payload.getDescription());
-        // manufacturerId should not be changed during update
 
         // SAVE the updated product
         Product updatedProduct = productRepository.save(product);
