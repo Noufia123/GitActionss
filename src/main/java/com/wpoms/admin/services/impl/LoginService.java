@@ -3,10 +3,12 @@ package com.wpoms.admin.services.impl;
 import com.wpoms.admin.models.entities.UserMaster;
 import com.wpoms.admin.models.payloads.LoginPayload;
 import com.wpoms.admin.models.response.LoginResponse;
+import com.wpoms.admin.repositories.CustomerRepository;
+import com.wpoms.admin.repositories.ManufacturerMasterRepository;
 import com.wpoms.admin.repositories.UserMasterRepository;
+import com.wpoms.admin.repositories.VendorMasterRepository;
 import com.wpoms.admin.services.ILoginService;
-import com.wpoms.admin.utilities.security.JwtUtil;  // ← ADD THIS IMPORT
-
+import com.wpoms.admin.utilities.security.JwtUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
@@ -23,7 +25,16 @@ public class LoginService implements ILoginService {
     UserMasterRepository userRepository;
 
     @Autowired
-    JwtUtil jwtUtil;  // ← ADD THIS
+    ManufacturerMasterRepository manufacturerMasterRepository;
+
+    @Autowired
+    VendorMasterRepository vendorMasterRepository;
+
+    @Autowired
+    CustomerRepository customerRepository;
+
+    @Autowired
+    JwtUtil jwtUtil;
 
     @Override
     public LoginResponse login(LoginPayload payload) {
@@ -35,15 +46,40 @@ public class LoginService implements ILoginService {
             throw new IllegalArgumentException("Invalid credentials");
         }
 
-        // GENERATE TOKEN WITH EMAIL AND ROLE
+        // Generate token
         String token = jwtUtil.generateToken(user.getEmail(), user.getRole());
+
+        // Get roleId based on role
+        Long roleId = null;
+        String role = user.getRole().toUpperCase();
+        
+        switch (role) {
+            case "MANUFACTURER":
+                roleId = manufacturerMasterRepository.findByUserId(user.getId().intValue())
+                        .map(manufacturer -> (long) manufacturer.getManufacturerId())
+                        .orElse(null);
+                break;
+                
+            case "VENDOR":
+                roleId = vendorMasterRepository.findByUserId(user.getId().intValue())
+                        .map(vendor -> (long) vendor.getVendorId())
+                        .orElse(null);
+                break;
+                
+            case "CUSTOMER":
+                roleId = customerRepository.findByUserId(user.getId().intValue())
+                        .map(customer -> (long) customer.getCustomerId())
+                        .orElse(null);
+                break;
+        }
 
         LoginResponse response = new LoginResponse();
         response.setMessage("Login successful");
         response.setUserId(user.getId());
         response.setEmail(user.getEmail());
         response.setRole(user.getRole());
-        response.setToken(token);  // ← ADD TOKEN TO RESPONSE
+        response.setToken(token);
+        response.setRoleId(roleId);
 
         return response;
     }
