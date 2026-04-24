@@ -13,5 +13,5 @@ public interface VendorStaffRepository extends JpaRepository<VendorStaff, Intege
     boolean existsByPhoneAndVendorId(String phone, int vendorId);
 
     List<VendorStaff> findByVendorId(int vendorId);
-
+    
 }

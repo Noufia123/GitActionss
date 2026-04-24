@@ -8,6 +8,9 @@ import com.wpoms.admin.models.response.RegisterVendorResponse;
 import com.wpoms.admin.models.response.VendorStaffResponse;
 import com.wpoms.admin.services.IVendorService;
 import jakarta.validation.Valid;
+
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -38,6 +41,12 @@ public class VendorController {
         return ResponseEntity.ok(response);
     }
 
+    @GetMapping("/staff-list")
+    public ResponseEntity<List<VendorStaffResponse>> getAllStaffByVendorId(@RequestParam int vendorId) {
+        List<VendorStaffResponse> response = service.getAllStaffByVendorId(vendorId);
+        return ResponseEntity.ok(response);
+    }
+        
     @PostMapping("/create-staff")
     public VendorStaffResponse createVendorStaff(
             @Valid @RequestBody VendorStaffPayload payload) {
