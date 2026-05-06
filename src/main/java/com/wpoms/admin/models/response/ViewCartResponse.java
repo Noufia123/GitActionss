@@ -17,7 +17,7 @@ public class ViewCartResponse {
     private double totalAmount;
 
     @Data
-    @AllArgsConstructors
+    @AllArgsConstructor
     @NoArgsConstructor
     public static class CartItemDetail {
         private int cartItemId;
@@ -29,8 +29,5 @@ public class ViewCartResponse {
         private double subtotal;
     }
 }
-<<<<<<< HEAD
-=======
 
 
->>>>>>> f1162e77d936e9e9169a77427f042d2df3bebce3
