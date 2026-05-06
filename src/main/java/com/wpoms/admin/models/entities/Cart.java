@@ -5,7 +5,9 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+
 import java.time.LocalDateTime;
+
 
 @Entity
 @Table(name = "cart")
@@ -19,8 +21,10 @@ public class Cart {
     @Column(name = "cart_id")
     private int cartId;
 
+
     @Column(name = "vendor_id", unique = true)
     private int vendorId;
+
 
     @Column(name = "created_at")
     private LocalDateTime createdAt;
