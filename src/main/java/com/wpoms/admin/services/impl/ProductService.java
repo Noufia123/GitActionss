@@ -10,7 +10,9 @@ import com.wpoms.admin.models.entities.Product;
 import com.wpoms.admin.models.payloads.ProductPayload;
 import com.wpoms.admin.models.response.ProductResponse;
 import com.wpoms.admin.repositories.ManufacturerMasterRepository;
+import com.wpoms.admin.repositories.ProductCategoryRepository;
 import com.wpoms.admin.repositories.ProductRepository;
+import com.wpoms.admin.repositories.ProductWarrantyTypeRepository;
 import com.wpoms.admin.services.IProductService;
 
 @Service
@@ -22,9 +24,18 @@ public class ProductService implements IProductService {
     @Autowired
     private ManufacturerMasterRepository manufacturerMasterRepository;
 
+    @Autowired
+    private ProductCategoryRepository categoryRepository;
+
+    @Autowired
+    private ProductWarrantyTypeRepository warrantyTypeRepository;
+
     // ========== 1. CREATE PRODUCT ==========
     @Override
     public ProductResponse createProduct(ProductPayload payload) {
+
+        // validate warranty type and category
+        validateCategoryAndWarrantyType(payload);
 
         // Check if manufacturer exists
         if (!manufacturerMasterRepository.existsByManufacturerId(payload.getManufacturerId().intValue())) {
@@ -120,6 +131,9 @@ public class ProductService implements IProductService {
     @Override
     public ProductResponse updateProduct(int productId, ProductPayload payload) {
 
+        // validate warranty type and category
+        validateCategoryAndWarrantyType(payload);
+
         // Find product by ID and manufacturer ID
         Product product = productRepository
                 .findByProductIdAndManufacturerId(productId, payload.getManufacturerId().intValue())
@@ -147,5 +161,15 @@ public class ProductService implements IProductService {
         response.setMessage("Product updated successfully");
 
         return response;
+    }
+
+    private void validateCategoryAndWarrantyType(ProductPayload payload) {
+        if (!categoryRepository.existsByCategoryNameIgnoreCase(payload.getCategory())) {
+            throw new RuntimeException("Category not found with name: " + payload.getCategory());
+        }
+
+        if (!warrantyTypeRepository.existsByWarrantyTypeIgnoreCase(payload.getWarrantyType())) {
+            throw new RuntimeException("Warranty type not found with name: " + payload.getWarrantyType());
+        }
     }
 }
