@@ -14,7 +14,7 @@ import org.springframework.web.bind.annotation.*;
 @RequestMapping("/api")
 @CrossOrigin
 public class LoginController {
-
+        
     @Autowired
     ILoginService service;
 
