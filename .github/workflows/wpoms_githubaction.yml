@@ -34,4 +34,4 @@ jobs:
             sudo docker build -t wpoms_server .
 
             # 5. Run the new container
-            sudo docker run -d --name wpoms_server -p 8081:8081 wpoms_server
+            sudo docker run -d --name wpoms_server -p 5173:3003 wpoms_server
